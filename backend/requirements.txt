@@ -1,0 +1,31 @@
+# FastAPI and web
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-multipart>=0.0.6
+
+# Database
+sqlalchemy>=2.0.0
+asyncpg>=0.29.0
+alembic>=1.13.0
+
+# PDF parsing and OCR
+pytesseract>=0.3.10
+pdf2image>=1.16.3
+Pillow>=10.2.0
+
+# Utilities
+python-dateutil>=2.8.2
+httpx>=0.26.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+httpx>=0.26.0
+
+# Development
+black>=24.1.0
+isort>=5.13.0
+mypy>=1.8.0

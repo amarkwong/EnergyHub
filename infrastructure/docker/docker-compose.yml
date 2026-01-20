@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://energyhub:energyhub@db:5432/energyhub
+      - DEBUG=true
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - energyhub
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - energyhub
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: energyhub
+      POSTGRES_PASSWORD: energyhub
+      POSTGRES_DB: energyhub
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U energyhub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - energyhub
+
+volumes:
+  postgres_data:
+  uploads:
+
+networks:
+  energyhub:
+    driver: bridge
