@@ -45,8 +45,8 @@ class TimePeriod(BaseModel):
     """Time period for TOU tariffs."""
 
     name: str  # e.g., "peak", "off_peak", "shoulder"
-    start_time: time
-    end_time: time
+    start_time: Optional[time] = None
+    end_time: Optional[time] = None
     days: list[int] = Field(default=[0, 1, 2, 3, 4, 5, 6], description="0=Monday, 6=Sunday")
     rate_cents_per_kwh: Decimal
 

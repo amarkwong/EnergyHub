@@ -50,12 +50,14 @@ class ReconciliationEngine:
             raise ValueError("Parsed invoice not found")
 
         # Calculate expected invoice
+        inferred_plan = retail_plan_name or parsed.get("energy_plan_name")
         calculated = await self._invoice_calculator.calculate(
             nem12_file_id=nem12_file_id,
-            network_tariff_code=network_tariff_code or 'EA010',
-            retail_plan_name=retail_plan_name,
+            network_tariff_code=network_tariff_code,
+            retail_plan_name=inferred_plan,
             billing_start=parsed.get('billing_period_start', '').isoformat() if parsed.get('billing_period_start') else None,
-            billing_end=parsed.get('billing_period_end', '').isoformat() if parsed.get('billing_period_end') else None
+            billing_end=parsed.get('billing_period_end', '').isoformat() if parsed.get('billing_period_end') else None,
+            parsed_invoice=parsed,
         )
 
         # Reconcile line items
@@ -145,7 +147,7 @@ class ReconciliationEngine:
             calc_by_type[charge_type].append(item)
 
         invoiced_matched = set()
-        calculated_matched = set()
+        calculated_matched: set[tuple[str, int]] = set()
 
         # Match invoiced items to calculated
         for i, inv_item in enumerate(invoiced_items):
@@ -157,7 +159,8 @@ class ReconciliationEngine:
 
             # Find best matching calculated item
             for j, calc_item in enumerate(calc_by_type.get(charge_type, [])):
-                if j in calculated_matched:
+                match_key = (charge_type, j)
+                if match_key in calculated_matched:
                     continue
 
                 calc_amount = Decimal(str(calc_item.get('amount', 0)))
@@ -169,7 +172,7 @@ class ReconciliationEngine:
 
             if best_match:
                 j, calc_item = best_match
-                calculated_matched.add(j)
+                calculated_matched.add((charge_type, j))
                 invoiced_matched.add(i)
 
                 calc_amount = Decimal(str(calc_item.get('amount', 0)))
@@ -222,7 +225,7 @@ class ReconciliationEngine:
         # Add any calculated items without matching invoiced items
         for charge_type, items in calc_by_type.items():
             for j, calc_item in enumerate(items):
-                if j not in calculated_matched:
+                if (charge_type, j) not in calculated_matched:
                     calc_amount = Decimal(str(calc_item.get('amount', 0)))
                     reconciled.append({
                         'description': calc_item.get('description', ''),

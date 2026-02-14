@@ -108,3 +108,11 @@ output "connection_string" {
   value     = "postgresql://energyhub:${random_password.db_password.result}@${aws_db_instance.main.endpoint}/energyhub"
   sensitive = true
 }
+
+output "security_group_id" {
+  value = aws_security_group.database.id
+}
+
+output "password_secret_arn" {
+  value = aws_secretsmanager_secret.db_password.arn
+}

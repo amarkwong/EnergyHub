@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "description": "Automatically extracted logo URLs from provider websites"
+  },
+  "retailers": {
+    "AGL": {
+      "website": "https://www.agl.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Origin Energy": {
+      "website": "https://www.originenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "EnergyAustralia": {
+      "website": "https://www.energyaustralia.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Alinta Energy": {
+      "website": "https://www.alintaenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Red Energy": {
+      "website": "https://www.redenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "ENGIE": {
+      "website": "https://engie.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "1st Energy": {
+      "website": "https://www.1stenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Powershop": {
+      "website": "https://www.powershop.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "dodo": {
+      "website": "https://www.dodo.com",
+      "logo_url": null,
+      "format": null
+    },
+    "ActewAGL": {
+      "website": "https://www.actewagl.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Lumo": {
+      "website": "https://www.lumoenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Momentum Energy": {
+      "website": "https://www.momentumenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "BlueNRG": {
+      "website": "https://www.bluenrg.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "OVO Energy": {
+      "website": "https://www.ovoenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Arcline by RACV": {
+      "website": "https://www.racv.com.au",
+      "logo_url": null,
+      "format": null
+    }
+  },
+  "network_providers": {
+    "ausgrid": {
+      "website": "https://www.ausgrid.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "endeavour_energy": {
+      "website": "https://www.endeavourenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "essential_energy": {
+      "website": "https://www.essentialenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "energex": {
+      "website": "https://www.energex.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "ergon_energy": {
+      "website": "https://www.ergon.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "ausnet_services": {
+      "website": "https://www.ausnetservices.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "citipower": {
+      "website": "https://www.citipower.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "jemena": {
+      "website": "https://www.jemena.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "powercor": {
+      "website": "https://www.powercor.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "united_energy": {
+      "website": "https://www.unitedenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "evoenergy": {
+      "website": "https://www.evoenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "tasnetworks": {
+      "website": "https://www.tasnetworks.com.au",
+      "logo_url": null,
+      "format": null
+    }
+  }
+}

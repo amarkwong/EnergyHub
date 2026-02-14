@@ -1,16 +1,19 @@
 """NEM12 file processing service."""
-import re
-from datetime import datetime, date
-from typing import Optional
 from collections import defaultdict
+from datetime import datetime, timezone
+from decimal import Decimal
+
+from app.db.database import SessionLocal
+from app.models.meter_data import MeterDataInterval
 
 
 class NEM12Service:
     """Service for processing NEM12 metering data files."""
+    _shared_file_data: dict = {}
 
     def __init__(self):
-        # In-memory storage (replace with database in production)
-        self._file_data = {}
+        # Shared in-memory store across service instances.
+        self._file_data = self._shared_file_data
 
     async def process_nem12(self, file_id: str, content: str) -> list[dict]:
         """
@@ -71,7 +74,7 @@ class NEM12Service:
         self._file_data[file_id] = {
             'meters': meters,
             'intervals': dict(interval_data),
-            'processed_at': datetime.utcnow()
+            'processed_at': datetime.now(timezone.utc)
         }
 
         return meters
@@ -119,6 +122,7 @@ class NEM12Service:
                     intervals.append({
                         'date': interval_date.isoformat(),
                         'interval': i + 1,
+                        'interval_length_minutes': interval_length,
                         'value': value,
                         'unit': meter['unit_of_measure']
                     })
@@ -132,7 +136,60 @@ class NEM12Service:
         """Get aggregated consumption summary for a file."""
         data = self._file_data.get(file_id)
         if not data:
-            return []
+            # Fallback: summarize persisted retailer CSV intervals from DB.
+            with SessionLocal() as db:
+                rows = (
+                    db.query(MeterDataInterval)
+                    .filter(MeterDataInterval.file_id == file_id)
+                    .order_by(MeterDataInterval.nmi.asc(), MeterDataInterval.start_at.asc())
+                    .all()
+                )
+            if not rows:
+                return []
+
+            by_nmi: dict[str, list[MeterDataInterval]] = defaultdict(list)
+            for row in rows:
+                by_nmi[row.nmi].append(row)
+
+            output: list[dict] = []
+            for nmi, nmi_rows in by_nmi.items():
+                total = Decimal("0")
+                peak = Decimal("0")
+                off_peak = Decimal("0")
+                start_date = nmi_rows[0].start_at.date()
+                end_date = nmi_rows[0].start_at.date()
+
+                for item in nmi_rows:
+                    value = Decimal(str(item.profile_read_value))
+                    if item.rate_type_description and "solar" in item.rate_type_description.lower():
+                        value = -value
+                    total += value
+
+                    local_hour = item.start_at.hour
+                    is_weekday = item.start_at.weekday() < 5
+                    is_peak = is_weekday and 7 <= local_hour < 22
+                    if is_peak:
+                        peak += value
+                    else:
+                        off_peak += value
+
+                    d = item.start_at.date()
+                    if d < start_date:
+                        start_date = d
+                    if d > end_date:
+                        end_date = d
+
+                output.append(
+                    {
+                        "nmi": nmi,
+                        "period_start": start_date,
+                        "period_end": end_date,
+                        "total_kwh": float(total),
+                        "peak_kwh": float(peak),
+                        "off_peak_kwh": float(off_peak),
+                    }
+                )
+            return output
 
         summaries = []
         for meter in data['meters']:
@@ -180,7 +237,35 @@ class NEM12Service:
         """Get raw interval data for charting."""
         data = self._file_data.get(file_id)
         if not data:
-            return []
+            with SessionLocal() as db:
+                query = db.query(MeterDataInterval).filter(MeterDataInterval.file_id == file_id)
+                if nmi:
+                    query = query.filter(MeterDataInterval.nmi == nmi)
+                rows = query.order_by(MeterDataInterval.start_at.asc()).all()
+
+            result = []
+            for item in rows:
+                row_date = item.start_at.date().isoformat()
+                if start_date and row_date < start_date:
+                    continue
+                if end_date and row_date > end_date:
+                    continue
+                minutes_since_midnight = item.start_at.hour * 60 + item.start_at.minute
+                interval_number = (minutes_since_midnight // item.interval_length_minutes) + 1
+                result.append(
+                    {
+                        "date": row_date,
+                        "interval": interval_number,
+                        "interval_length_minutes": item.interval_length_minutes,
+                        "value": float(item.profile_read_value),
+                        "unit": "kWh",
+                        "register_code": item.register_code,
+                        "rate_type_description": item.rate_type_description,
+                        "quality_flag": item.quality_flag,
+                        "nmi": item.nmi,
+                    }
+                )
+            return result
 
         result = []
         for meter_nmi, intervals in data['intervals'].items():

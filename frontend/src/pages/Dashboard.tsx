@@ -1,27 +1,52 @@
 import { Link } from 'react-router-dom'
-
-const stats = [
-  { name: 'Total Consumption', value: '1,234 kWh', change: '+4.75%', changeType: 'increase' },
-  { name: 'Invoice Discrepancy', value: '$45.20', change: '-2.3%', changeType: 'decrease' },
-  { name: 'Reconciled Invoices', value: '12', change: '+3', changeType: 'increase' },
-  { name: 'Pending Reviews', value: '2', change: '0', changeType: 'neutral' },
-]
-
-const quickActions = [
-  { name: 'Upload NEM12', description: 'Upload consumption data', href: '/upload', icon: '📊' },
-  { name: 'Upload Invoice', description: 'Parse invoice PDF', href: '/upload', icon: '📄' },
-  { name: 'Run Reconciliation', description: 'Compare invoice vs calculated', href: '/reconciliation', icon: '🔍' },
-  { name: 'View Tariffs', description: 'Browse network tariffs', href: '/tariffs', icon: '💰' },
-]
+import { useAppMode } from '../context/AppModeContext'
 
 export default function Dashboard() {
+  const { mode } = useAppMode()
+  const stats =
+    mode === 'business'
+      ? [
+          { name: 'Sites Tracked', value: '24', change: '+2', changeType: 'increase' },
+          { name: 'Billed vs Expected', value: '$8,420', change: '-3.1%', changeType: 'decrease' },
+          { name: 'Invoices Audited', value: '67', change: '+8', changeType: 'increase' },
+          { name: 'Risk Alerts', value: '3', change: '+1', changeType: 'neutral' },
+        ]
+      : [
+          { name: 'Monthly Consumption', value: '1,234 kWh', change: '+4.75%', changeType: 'increase' },
+          { name: 'Bill Difference', value: '$45.20', change: '-2.3%', changeType: 'decrease' },
+          { name: 'Bills Reconciled', value: '12', change: '+3', changeType: 'increase' },
+          { name: 'Pending Reviews', value: '2', change: '0', changeType: 'neutral' },
+        ]
+
+  const quickActions =
+    mode === 'business'
+      ? [
+          { name: 'Ingest Meter Data', description: 'Upload portfolio interval files', href: '/upload', icon: '🏢' },
+          { name: 'Run Invoice Audit', description: 'Validate supplier invoices at scale', href: '/reconciliation', icon: '🧾' },
+          { name: 'Review Network Charges', description: 'Inspect demand and TOU structures', href: '/network', icon: '⚡' },
+          { name: 'Compare Retail Contracts', description: 'Track retailer plan history', href: '/retailers', icon: '📑' },
+        ]
+      : [
+          { name: 'Meter Data', description: 'Upload household consumption data', href: '/upload?stage=meter', icon: '🏠' },
+          { name: 'Invoice Upload', description: 'Parse your bill and extract charges', href: '/upload?stage=invoice', icon: '📄' },
+          { name: 'Run Bill Check', description: 'Compare charged vs expected costs', href: '/reconciliation', icon: '🔍' },
+          { name: 'Plan Emulator', description: 'Emulate costs on other plans', href: '/emulator', icon: '🧪' },
+          { name: 'Best Plan Summary', description: 'Get recommendation from your usage', href: '/summary', icon: '✅' },
+          { name: 'View Network', description: 'Browse network tariffs and TOU', href: '/network', icon: '💰' },
+          { name: 'Retailer Plans', description: 'Browse retailers and plans', href: '/retailers', icon: '🏪' },
+        ]
+
   return (
     <div className="space-y-8">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-slate-900">
+          {mode === 'business' ? 'Business Dashboard' : 'Residential Dashboard'}
+        </h1>
         <p className="mt-1 text-sm text-slate-500">
-          Overview of your energy consumption and invoice reconciliation status.
+          {mode === 'business'
+            ? 'Portfolio-level oversight for tariff governance, invoice assurance, and risk controls.'
+            : 'Simple and transparent view of your usage, plans, and bill reconciliation status.'}
         </p>
       </div>
 
@@ -54,7 +79,7 @@ export default function Dashboard() {
       {/* Quick actions */}
       <div>
         <h2 className="text-lg font-medium text-slate-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${mode === 'business' ? 'lg:grid-cols-4' : 'lg:grid-cols-4'}`}>
           {quickActions.map((action) => (
             <Link
               key={action.name}
@@ -76,7 +101,11 @@ export default function Dashboard() {
         <h2 className="text-lg font-medium text-slate-900 mb-4">Recent Activity</h2>
         <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
           <div className="p-6 text-center text-slate-500">
-            <p>No recent activity. Upload your first NEM12 file to get started.</p>
+            <p>
+              {mode === 'business'
+                ? 'No recent portfolio activity. Start by uploading meter data or recent invoices.'
+                : 'No recent activity. Upload your first NEM12 file to get started.'}
+            </p>
             <Link
               to="/upload"
               className="inline-flex items-center mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700"

@@ -27,7 +27,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Manrope', 'Segoe UI', 'Helvetica Neue', 'sans-serif'],
       },
     },
   },

@@ -40,6 +40,11 @@ class ParsedInvoice(BaseModel):
     invoice_date: date
     due_date: Optional[date] = None
     retailer: str
+    energy_plan_name: Optional[str] = None
+    network_provider: Optional[str] = None
+    service_address: Optional[str] = None
+    service_state: Optional[str] = None
+    service_postcode: Optional[str] = None
     nmi: str
     billing_period_start: date
     billing_period_end: date

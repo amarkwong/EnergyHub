@@ -1,0 +1,146 @@
+{
+  "metadata": {
+    "description": "Official logo asset URLs extracted from retailer and network provider webpages",
+    "as_of": "2026-02-10",
+    "notes": "Some providers block scraping or load logos via JS/CSS bundles; unresolved entries are left null."
+  },
+  "retailers": {
+    "AGL": {
+      "website": "https://www.agl.com.au",
+      "logo_url": "https://www.agl.com.au/content/dam/aglweb/images/agl-jtc-logo.svg",
+      "format": "svg"
+    },
+    "Origin Energy": {
+      "website": "https://www.originenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "EnergyAustralia": {
+      "website": "https://www.energyaustralia.com.au",
+      "logo_url": "https://www.energyaustralia.com.au/themes/custom/ea/assets/images/EA_logo.svg",
+      "format": "svg"
+    },
+    "Alinta Energy": {
+      "website": "https://www.alintaenergy.com.au",
+      "logo_url": "https://www.alintaenergy.com.au/content/experience-fragments/alinta/global/footer/master/_jcr_content/root/container/columncontrol/columncontrolcontainer/image.coreimg.svg/1741829867656/alintalogo.svg",
+      "format": "svg"
+    },
+    "Red Energy": {
+      "website": "https://www.redenergy.com.au",
+      "logo_url": "https://www.redenergy.com.au/assets/img/logo-red-energy.png",
+      "format": "png"
+    },
+    "ENGIE": {
+      "website": "https://engie.com.au",
+      "logo_url": "https://engie.com.au/themes/custom/sunrise/images/engie-blue.f6c6ec1f.svg",
+      "format": "svg"
+    },
+    "1st Energy": {
+      "website": "https://www.1stenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Powershop": {
+      "website": "https://www.powershop.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "dodo": {
+      "website": "https://www.dodo.com",
+      "logo_url": null,
+      "format": null
+    },
+    "ActewAGL": {
+      "website": "https://www.actewagl.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Lumo": {
+      "website": "https://www.lumoenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Momentum Energy": {
+      "website": "https://www.momentumenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "BlueNRG": {
+      "website": "https://www.bluenrg.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "OVO Energy": {
+      "website": "https://www.ovoenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "Arcline by RACV": {
+      "website": "https://www.racv.com.au",
+      "logo_url": null,
+      "format": null
+    }
+  },
+  "network_providers": {
+    "ausgrid": {
+      "website": "https://www.ausgrid.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "endeavour_energy": {
+      "website": "https://www.endeavourenergy.com.au",
+      "logo_url": "https://www.endeavourenergy.com.au/images/ee-logo.svg",
+      "format": "svg"
+    },
+    "essential_energy": {
+      "website": "https://www.essentialenergy.com.au",
+      "logo_url": "https://www.essentialenergy.com.au/-/media/Project/EssentialEnergy/shared/logo.svg?h=80&hash=D6C3FD15E19E68C6E18B41E553560CAF&iar=0&rev=925606df76504085aff1409a92286cf5&w=157",
+      "format": "svg"
+    },
+    "energex": {
+      "website": "https://www.energex.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "ergon_energy": {
+      "website": "https://www.ergon.com.au",
+      "logo_url": "https://www.ergon.com.au/__data/assets/image/0008/829088/network-logo.png",
+      "format": "png"
+    },
+    "ausnet_services": {
+      "website": "https://www.ausnetservices.com.au",
+      "logo_url": "https://www.ausnetservices.com.au/-/media/project/ausnet/corporate-website/components/header/ausnet-logo.svg?hash=0BD369FBA0DACEA8198262AD212B284B&iar=0&rev=cf580f366ffc4e2a8d736f1a3525e456",
+      "format": "svg"
+    },
+    "citipower": {
+      "website": "https://www.citipower.com.au",
+      "logo_url": "https://www.citipower.com.au/static/logo-d99693e8c3c9ff162aa712e322de6b26.svg",
+      "format": "svg"
+    },
+    "jemena": {
+      "website": "https://www.jemena.com.au",
+      "logo_url": "https://www.jemena.com.au/globalassets/images/logos/jemena-logo-horizontal.png",
+      "format": "png"
+    },
+    "powercor": {
+      "website": "https://www.powercor.com.au",
+      "logo_url": "https://www.powercor.com.au/static/logo-d99693e8c3c9ff162aa712e322de6b26.svg",
+      "format": "svg"
+    },
+    "united_energy": {
+      "website": "https://www.unitedenergy.com.au",
+      "logo_url": null,
+      "format": null
+    },
+    "evoenergy": {
+      "website": "https://www.evoenergy.com.au",
+      "logo_url": "https://www.evoenergy.com.au/-/media/Project/Evoenergy/EVO/Header/logo-evo.png?rev=b68f302eabb94b5e9703b1bc08ce3a93",
+      "format": "png"
+    },
+    "tasnetworks": {
+      "website": "https://www.tasnetworks.com.au",
+      "logo_url": null,
+      "format": null
+    }
+  }
+}

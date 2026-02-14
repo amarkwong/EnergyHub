@@ -1,13 +1,17 @@
 """Invoice upload, parsing, and calculation endpoints."""
 import uuid
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from typing import Optional
+from sqlalchemy.orm import Session
 
+from app.db.database import get_db, init_db
+from app.models.auth import User
 from app.schemas.invoice import (
     ParsedInvoice,
     CalculatedInvoice,
     InvoiceUploadResponse
 )
+from app.services.auth_service import auth_service, get_optional_current_user
 from app.services.invoice_parser import InvoiceParser
 from app.services.invoice_calculator import InvoiceCalculator
 
@@ -17,7 +21,11 @@ invoice_calculator = InvoiceCalculator()
 
 
 @router.post("/upload", response_model=InvoiceUploadResponse)
-async def upload_invoice(file: UploadFile = File(...)):
+async def upload_invoice(
+    file: UploadFile = File(...),
+    user: User | None = Depends(get_optional_current_user),
+    db: Session = Depends(get_db),
+):
     """
     Upload and parse an invoice PDF using OCR.
 
@@ -32,9 +40,17 @@ async def upload_invoice(file: UploadFile = File(...)):
 
     content = await file.read()
     file_id = str(uuid.uuid4())
+    init_db()
 
     try:
         result = await invoice_parser.parse_invoice(file_id, content)
+        if user is not None:
+            auth_service.apply_invoice_relationships(
+                db=db,
+                user=user,
+                invoice_file_id=file_id,
+                parsed_invoice=result["invoice"],
+            )
         return InvoiceUploadResponse(
             file_id=file_id,
             filename=file.filename,

@@ -1,0 +1,302 @@
+{
+  "metadata": {
+    "description": "Curated network tariff snapshots sourced from public distributor/AER pages",
+    "as_of": "2026-02-09",
+    "sources": [
+      "https://www.aer.gov.au",
+      "https://www.energex.com.au/manage-your-energy/save-money-and-electricity/tariffs/residential-tariffs",
+      "https://evoenergy.com.au/Your-Energy/Pricing-and-tariffs/Electricity-network-pricing",
+      "https://www.ergon.com.au/retail/residential/tariffs-and-prices/compare-residential-tariffs"
+    ]
+  },
+  "tariffs": [
+    {
+      "tariff_code": "EA010",
+      "tariff_name": "Residential Time of Use",
+      "network_provider": "ausgrid",
+      "tariff_type": "tou",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 103.5,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 36.2},
+        {"name": "shoulder", "rate_cents_per_kwh": 13.1},
+        {"name": "off_peak", "rate_cents_per_kwh": 8.5}
+      ],
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "EA010",
+      "tariff_name": "Residential Time of Use",
+      "network_provider": "ausgrid",
+      "tariff_type": "tou",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 98.4,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 34.9},
+        {"name": "shoulder", "rate_cents_per_kwh": 12.6},
+        {"name": "off_peak", "rate_cents_per_kwh": 8.1}
+      ],
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "EA025",
+      "tariff_name": "Residential Flat Rate",
+      "network_provider": "ausgrid",
+      "tariff_type": "flat",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 103.5,
+      "usage_rate_cents_per_kwh": 19.2,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "EA025",
+      "tariff_name": "Residential Flat Rate",
+      "network_provider": "ausgrid",
+      "tariff_type": "flat",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 98.4,
+      "usage_rate_cents_per_kwh": 18.6,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "NAST11",
+      "tariff_name": "Small Residential TOU Weekday",
+      "network_provider": "ausnet_services",
+      "tariff_type": "tou",
+      "effective_from": "2024-01-01",
+      "daily_supply_charge_cents": 41.6,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 18.14},
+        {"name": "off_peak", "rate_cents_per_kwh": 6.83}
+      ],
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "C1R",
+      "tariff_name": "Residential Single Rate",
+      "network_provider": "citipower",
+      "tariff_type": "flat",
+      "effective_from": "2024-01-01",
+      "daily_supply_charge_cents": 31.9,
+      "usage_rate_cents_per_kwh": 8.75,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "N70",
+      "tariff_name": "Residential Time of Use",
+      "network_provider": "endeavour_energy",
+      "tariff_type": "tou",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 89.5,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 29.82},
+        {"name": "shoulder", "rate_cents_per_kwh": 11.43},
+        {"name": "off_peak", "rate_cents_per_kwh": 7.89}
+      ],
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "8400",
+      "tariff_name": "Residential Flat",
+      "network_provider": "energex",
+      "tariff_type": "flat",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 58.4,
+      "usage_rate_cents_per_kwh": 11.6,
+      "source_url": "https://www.energex.com.au/manage-your-energy/save-money-and-electricity/tariffs/residential-tariffs"
+    },
+    {
+      "tariff_code": "8400",
+      "tariff_name": "Residential Flat",
+      "network_provider": "energex",
+      "tariff_type": "flat",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 55.8,
+      "usage_rate_cents_per_kwh": 11.2,
+      "source_url": "https://www.energex.com.au/manage-your-energy/save-money-and-electricity/tariffs/residential-tariffs"
+    },
+    {
+      "tariff_code": "11",
+      "tariff_name": "Residential Flat Rate",
+      "network_provider": "ergon_energy",
+      "tariff_type": "flat",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 168.842,
+      "usage_rate_cents_per_kwh": 32.973,
+      "source_url": "https://www.ergon.com.au/retail/residential/tariffs-and-prices/compare-residential-tariffs"
+    },
+    {
+      "tariff_code": "12D",
+      "tariff_name": "Time of Use",
+      "network_provider": "ergon_energy",
+      "tariff_type": "tou",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 148.834,
+      "time_periods": [
+        {
+          "name": "off_peak",
+          "start_time": "11:00",
+          "end_time": "16:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 22.68
+        },
+        {
+          "name": "night",
+          "start_time": "21:00",
+          "end_time": "11:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 28.035
+        },
+        {
+          "name": "peak",
+          "start_time": "16:00",
+          "end_time": "21:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 45.712
+        }
+      ],
+      "source_url": "https://www.ergon.com.au/retail/residential/tariffs-and-prices/compare-residential-tariffs"
+    },
+    {
+      "tariff_code": "12E",
+      "tariff_name": "Solar Soaker (Time of Use)",
+      "network_provider": "ergon_energy",
+      "tariff_type": "tou",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 148.834,
+      "time_periods": [
+        {
+          "name": "off_peak",
+          "start_time": "11:00",
+          "end_time": "16:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 7.724
+        },
+        {
+          "name": "night",
+          "start_time": "21:00",
+          "end_time": "11:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 26.375
+        },
+        {
+          "name": "peak",
+          "start_time": "16:00",
+          "end_time": "21:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 57.363
+        }
+      ],
+      "source_url": "https://www.ergon.com.au/retail/residential/tariffs-and-prices/compare-residential-tariffs"
+    },
+    {
+      "tariff_code": "14C",
+      "tariff_name": "Time of Use Demand",
+      "network_provider": "ergon_energy",
+      "tariff_type": "demand",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 126.666,
+      "demand_rate_cents_per_kw": 853.49,
+      "time_periods": [
+        {
+          "name": "off_peak",
+          "start_time": "11:00",
+          "end_time": "16:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 22.68
+        },
+        {
+          "name": "night",
+          "start_time": "21:00",
+          "end_time": "11:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 28.035
+        },
+        {
+          "name": "peak",
+          "start_time": "16:00",
+          "end_time": "21:00",
+          "days": [0, 1, 2, 3, 4, 5, 6],
+          "rate_cents_per_kwh": 24.984
+        }
+      ],
+      "source_url": "https://www.ergon.com.au/retail/residential/tariffs-and-prices/compare-residential-tariffs"
+    },
+    {
+      "tariff_code": "BLNN2AU",
+      "tariff_name": "Residential Single Rate",
+      "network_provider": "essential_energy",
+      "tariff_type": "flat",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 115.2,
+      "usage_rate_cents_per_kwh": 14.85,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "RES-TOU",
+      "tariff_name": "Residential Time of Use",
+      "network_provider": "evoenergy",
+      "tariff_type": "tou",
+      "effective_from": "2025-07-01",
+      "daily_supply_charge_cents": 54.0,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 25.2},
+        {"name": "off_peak", "rate_cents_per_kwh": 9.1}
+      ],
+      "source_url": "https://evoenergy.com.au/Your-Energy/Pricing-and-tariffs/Electricity-network-pricing"
+    },
+    {
+      "tariff_code": "RES-TOU",
+      "tariff_name": "Residential Time of Use",
+      "network_provider": "evoenergy",
+      "tariff_type": "tou",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 52.3,
+      "time_periods": [
+        {"name": "peak", "rate_cents_per_kwh": 24.5},
+        {"name": "off_peak", "rate_cents_per_kwh": 8.9}
+      ],
+      "source_url": "https://evoenergy.com.au/Your-Energy/Pricing-and-tariffs/Electricity-network-pricing"
+    },
+    {
+      "tariff_code": "A100",
+      "tariff_name": "Residential Anytime",
+      "network_provider": "jemena",
+      "tariff_type": "flat",
+      "effective_from": "2024-01-01",
+      "daily_supply_charge_cents": 36.7,
+      "usage_rate_cents_per_kwh": 8.25,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "D1",
+      "tariff_name": "Residential Single Rate",
+      "network_provider": "powercor",
+      "tariff_type": "flat",
+      "effective_from": "2024-01-01",
+      "daily_supply_charge_cents": 55.2,
+      "usage_rate_cents_per_kwh": 9.85,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "TAS31",
+      "tariff_name": "Residential Light and Power",
+      "network_provider": "tasnetworks",
+      "tariff_type": "flat",
+      "effective_from": "2024-07-01",
+      "daily_supply_charge_cents": 42.5,
+      "usage_rate_cents_per_kwh": 12.8,
+      "source_url": "https://www.aer.gov.au"
+    },
+    {
+      "tariff_code": "LVS1R",
+      "tariff_name": "Residential Single Rate",
+      "network_provider": "united_energy",
+      "tariff_type": "flat",
+      "effective_from": "2024-01-01",
+      "daily_supply_charge_cents": 34.5,
+      "usage_rate_cents_per_kwh": 8.45,
+      "source_url": "https://www.aer.gov.au"
+    }
+  ]
+}

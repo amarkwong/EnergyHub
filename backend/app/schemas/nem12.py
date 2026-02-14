@@ -50,3 +50,17 @@ class ConsumptionSummary(BaseModel):
     off_peak_kwh: float
     shoulder_kwh: Optional[float] = None
     demand_kw: Optional[float] = None  # Maximum demand
+
+
+class RetailerCsvUploadResponse(BaseModel):
+    """Response for retailer interval CSV ingestion."""
+
+    file_id: str
+    filename: str
+    rows_inserted: int
+    nmi_count: int
+    register_count: int
+    interval_length_minutes: int
+    start_at: datetime
+    end_at: datetime
+    processed_at: datetime

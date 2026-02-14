@@ -76,6 +76,15 @@ async def get_network_tariffs(
         )
 
 
+@router.get("/network/{provider}/history")
+async def get_network_tariff_history(provider: NetworkProvider):
+    """Get historical tariffs for a network provider grouped by year."""
+    try:
+        return await tariff_fetcher.get_network_tariff_history(provider)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch tariff history: {str(e)}")
+
+
 @router.get("/network/{provider}/{tariff_code}", response_model=TariffResponse)
 async def get_tariff_details(provider: NetworkProvider, tariff_code: str):
     """Get detailed tariff information by code."""

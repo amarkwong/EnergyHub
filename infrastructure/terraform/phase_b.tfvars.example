@@ -1,0 +1,23 @@
+# Enable serverless resources (Phase B)
+enable_serverless_phase_b = true
+
+# Keep false until you upload Lambda zip artifacts to S3
+create_lambda_functions = false
+
+# Optional custom frontend domain
+domain_name         = ""
+hosted_zone_id      = ""
+acm_certificate_arn = ""
+
+# Optional: explicitly set artifact bucket (otherwise storage module bucket is used)
+lambda_artifact_bucket = ""
+
+# Lambda artifact keys (required once create_lambda_functions=true)
+lambda_api_artifact_key = "lambdas/api/api.zip"
+
+lambda_worker_artifact_keys = {
+  reconciliation  = "lambdas/workers/reconciliation.zip"
+  invoice_parse   = "lambdas/workers/invoice_parse.zip"
+  meter_processing = "lambdas/workers/meter_processing.zip"
+  tariff_refresh  = "lambdas/workers/tariff_refresh.zip"
+}
