@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Environment
+.env
+
+# Database
+*.db
+
+# Uploads
+uploads/
+
+# Frontend build output
+dist/
+
+# OS
+.DS_Store
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
