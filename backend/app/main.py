@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.db.database import init_db
 from app.core.config import get_settings
-from app.api import account, auth, energy_plans, invoices, nem12, reconciliation, tariffs, tou
+from app.api import account, auth, emulator, energy_plans, invoices, nem12, reconciliation, tariffs, tou
 
 settings = get_settings()
 
@@ -38,6 +38,7 @@ app.include_router(tariffs.router, prefix="/api/tariffs", tags=["Tariffs"])
 app.include_router(reconciliation.router, prefix="/api/reconciliation", tags=["Reconciliation"])
 app.include_router(energy_plans.router, prefix="/api/energy-plans", tags=["Energy Plans"])
 app.include_router(tou.router, prefix="/api/tou", tags=["TOU"])
+app.include_router(emulator.router, prefix="/api/emulator", tags=["Emulator"])
 
 
 @app.on_event("startup")

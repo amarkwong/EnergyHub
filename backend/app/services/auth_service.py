@@ -152,7 +152,7 @@ class AuthService:
             return
 
         user_nmi = self.get_or_create_user_nmi(db, user_id=user.id, nmi=nmi)
-        self._apply_service_address(user_nmi=user_nmi, payload=payload)
+        self._apply_service_address(db=db, user_nmi=user_nmi, payload=payload)
         retailer_name = payload.get("retailer")
         period_start = payload.get("billing_period_start")
         period_end = payload.get("billing_period_end")
@@ -168,35 +168,66 @@ class AuthService:
                 network_tariff_code = code
                 break
 
-        assignment = UserNmiPlanAssignment(
-            user_nmi_id=user_nmi.id,
-            effective_from=period_start,
-            effective_to=period_end,
-            retailer_name=retailer_name,
-            retail_plan_id=plan_id,
-            network_tariff_code=network_tariff_code,
-            source_invoice_file_id=invoice_file_id,
+        # Upsert: update existing assignment or create new one
+        existing = (
+            db.query(UserNmiPlanAssignment)
+            .filter(
+                UserNmiPlanAssignment.user_nmi_id == user_nmi.id,
+                UserNmiPlanAssignment.effective_from == period_start,
+                UserNmiPlanAssignment.effective_to == period_end,
+            )
+            .first()
         )
-        db.add(assignment)
+        if existing:
+            existing.retailer_name = retailer_name
+            existing.retail_plan_id = plan_id
+            if network_tariff_code is not None:
+                existing.network_tariff_code = network_tariff_code
+            existing.source_invoice_file_id = invoice_file_id
+        else:
+            assignment = UserNmiPlanAssignment(
+                user_nmi_id=user_nmi.id,
+                effective_from=period_start,
+                effective_to=period_end,
+                retailer_name=retailer_name,
+                retail_plan_id=plan_id,
+                network_tariff_code=network_tariff_code,
+                source_invoice_file_id=invoice_file_id,
+            )
+            db.add(assignment)
         db.commit()
 
-    def _apply_service_address(self, user_nmi: UserNmi, payload: dict) -> None:
+    def _apply_service_address(self, db: Session, user_nmi: UserNmi, payload: dict) -> None:
         raw_address = (payload.get("service_address") or "").strip()
-        if not raw_address:
-            return
-
         service_state = (payload.get("service_state") or user_nmi.state or "").strip().upper() or None
         service_postcode = (payload.get("service_postcode") or user_nmi.postcode or "").strip() or None
 
+        # Always persist state/postcode when available, even without a full address.
+        if service_state:
+            user_nmi.state = service_state
+        if service_postcode:
+            user_nmi.postcode = service_postcode
+
+        if not raw_address:
+            # Fall back to state centroid if we at least have a state.
+            if service_state and not user_nmi.latitude:
+                geocode = self._geocoding.geocode_au_address("", state=service_state)
+                if geocode.latitude is not None:
+                    user_nmi.latitude = geocode.latitude
+                    user_nmi.longitude = geocode.longitude
+                    user_nmi.geocode_source = geocode.source
+                    user_nmi.geocoded_at = geocode.geocoded_at
+            db.add(user_nmi)
+            return
+
         geocode = self._geocoding.geocode_au_address(raw_address, state=service_state)
         user_nmi.service_address = raw_address
-        user_nmi.state = service_state
-        user_nmi.postcode = service_postcode
         if geocode.latitude is not None and geocode.longitude is not None:
             user_nmi.latitude = geocode.latitude
             user_nmi.longitude = geocode.longitude
             user_nmi.geocode_source = geocode.source
             user_nmi.geocoded_at = geocode.geocoded_at
+        db.add(user_nmi)
 
     @staticmethod
     def _resolve_plan_id(db: Session, retailer_name: str, effective_date) -> Optional[int]:

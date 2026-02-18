@@ -396,17 +396,31 @@ class InvoiceCalculator:
         if desc.startswith("next"):
             if feed_in_next_kwh > 0:
                 return -feed_in_next_kwh, "kWh"
+            if invoice_quantity is not None:
+                return -abs(Decimal(str(invoice_quantity))), "kWh"
             return Decimal("0"), "kWh"
         if "feed-in" in desc:
             if feed_in_next_kwh > 0 and ("standard" in desc or "first" in desc):
                 return -feed_in_first_kwh, "kWh"
-            return -usage_buckets["solar_export"], "kWh"
+            if usage_buckets["solar_export"] > 0:
+                return -usage_buckets["solar_export"], "kWh"
+            if invoice_quantity is not None:
+                return -abs(Decimal(str(invoice_quantity))), "kWh"
+            return Decimal("0"), "kWh"
         if "fit policy" in desc:
-            return -usage_buckets["solar_export"], "kWh"
+            if usage_buckets["solar_export"] > 0:
+                return -usage_buckets["solar_export"], "kWh"
+            if invoice_quantity is not None:
+                return -abs(Decimal(str(invoice_quantity))), "kWh"
+            return Decimal("0"), "kWh"
         if "controlled load" in desc or "tariff 31" in desc or "cl31" in desc:
-            return usage_buckets["controlled"], "kWh"
+            if usage_buckets["controlled"] > 0 or invoice_quantity is None:
+                return usage_buckets["controlled"], "kWh"
+            return Decimal(str(invoice_quantity)), "kWh"
         if "general usage" in desc or "usage" in desc:
-            return usage_buckets["general"], "kWh"
+            if usage_buckets["general"] > 0 or invoice_quantity is None:
+                return usage_buckets["general"], "kWh"
+            return Decimal(str(invoice_quantity)), "kWh"
         if "supply charge" in desc:
             return Decimal(str(invoice_quantity)) if invoice_quantity is not None else Decimal(billing_days), "day"
         if invoice_quantity is not None:

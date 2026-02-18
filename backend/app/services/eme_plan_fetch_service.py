@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from scripts.fetch_eme_plans import DEFAULT_BASE_URL, fetch_retailer_plans
+from app.services.energy_expert_service import EnergyExpertService
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,7 +47,7 @@ class EmePlanFetchService:
         output_path: Path = DEFAULT_EME_OUTPUT_PATH,
         base_url: str = DEFAULT_BASE_URL,
         page_size: int = 20,
-        max_plans: int = 100,
+        max_plans: int = 0,
         fuel_type: str = "ELECTRICITY",
         timeout_seconds: float = 30.0,
     ) -> dict[str, Any]:
@@ -103,7 +104,7 @@ class EmePlanFetchService:
         source_url: str,
         output_path: Path = DEFAULT_EME_OUTPUT_PATH,
         page_size: int = 20,
-        max_plans: int = 100,
+        max_plans: int = 0,
         fuel_type: str = "ELECTRICITY",
         timeout_seconds: float = 30.0,
     ) -> dict[str, Any]:
@@ -222,7 +223,11 @@ class EmePlanFetchService:
                 "fuel_type": plan.get("fuel_type"),
                 "retailer_slug": plan.get("retailer_slug"),
                 "plan_id": plan.get("plan_id"),
+                "tou_rates": EnergyExpertService.deduplicate_tou_rates(plan.get("tou_rates") or []),
                 "feed_in_tariffs": plan.get("feed_in_tariffs") or [],
+                "distributors": plan.get("distributors") or [],
+                "included_postcodes": plan.get("included_postcodes") or [],
+                "state": plan.get("state"),
             }
             dedup_key = self._retail_catalog_dedup_key(item)
             if dedup_key in seen_keys:
@@ -310,12 +315,15 @@ class EmePlanFetchService:
         plan_id = plan.get("plan_id")
         if plan_id:
             return ("plan_id", str(plan_id))
+        distributors = plan.get("distributors") or []
+        first_dist = str(distributors[0]).strip().lower() if distributors else ""
         return (
             "fallback",
             str(plan.get("retailer_slug") or plan.get("retailer") or "").strip().lower(),
             str(plan.get("plan_name") or "").strip().lower(),
             str(plan.get("effective_from") or ""),
             str(plan.get("tariff_type") or "").strip().lower(),
+            first_dist,
         )
 
     @staticmethod
@@ -323,9 +331,12 @@ class EmePlanFetchService:
         plan_id = item.get("plan_id")
         if plan_id:
             return ("plan_id", str(plan_id))
+        distributors = item.get("distributors") or []
+        first_dist = str(distributors[0]).strip().lower() if distributors else ""
         return (
             str(item.get("retailer_slug") or item.get("retailer") or "").strip().lower(),
             str(item.get("plan_name") or "").strip().lower(),
             str(item.get("effective_from") or ""),
             str(item.get("tariff_type") or "").strip().lower(),
+            first_dist,
         )

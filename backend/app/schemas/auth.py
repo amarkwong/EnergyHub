@@ -91,3 +91,26 @@ class NmiPlanAssignmentOut(BaseModel):
     network_tariff_code: Optional[str] = None
     source_invoice_file_id: Optional[str] = None
     created_at: datetime
+
+
+class BillingGap(BaseModel):
+    gap_start: date
+    gap_end: date
+
+
+class InvoiceSummaryItem(BaseModel):
+    invoice_number: Optional[str] = None
+    billing_period_start: date
+    billing_period_end: date
+    total: float
+
+
+class DashboardSummary(BaseModel):
+    invoice_total: float
+    billing_period_start: Optional[date] = None
+    billing_period_end: Optional[date] = None
+    billing_gaps: list[BillingGap] = []
+    usage_kwh: float
+    controlled_load_kwh: float
+    solar_export_kwh: float
+    invoices: list[InvoiceSummaryItem] = []

@@ -44,6 +44,14 @@ async def upload_invoice(
 
     try:
         result = await invoice_parser.parse_invoice(file_id, content)
+        invoice_parser.persist_invoice(
+            db=db,
+            file_id=file_id,
+            invoice_data=result["invoice"],
+            confidence=result["confidence"],
+            warnings=result.get("warnings", []),
+            user_id=user.id if user else None,
+        )
         if user is not None:
             auth_service.apply_invoice_relationships(
                 db=db,
@@ -66,9 +74,9 @@ async def upload_invoice(
 
 
 @router.get("/{file_id}", response_model=ParsedInvoice)
-async def get_parsed_invoice(file_id: str):
+async def get_parsed_invoice(file_id: str, db: Session = Depends(get_db)):
     """Get a previously parsed invoice by file ID."""
-    invoice = await invoice_parser.get_invoice(file_id)
+    invoice = await invoice_parser.get_invoice_with_fallback(file_id, db)
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice not found")
     return invoice

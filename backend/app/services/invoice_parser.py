@@ -1,9 +1,12 @@
 """Invoice PDF parsing service using OCR with fallbacks."""
 import io
+import json
 import re
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Optional
+
+from sqlalchemy.orm import Session
 
 
 class InvoiceParser:
@@ -20,8 +23,10 @@ class InvoiceParser:
             "invoice_number": r"(?:Invoice(?:\s*No\.?|\s*Number)?|Tax Invoice)\s*[:#-]?\s*([A-Z0-9/-]*\d[A-Z0-9/-]*)",
             "invoice_date": r"(?:Issue Date|Invoice Date|Date Issued|Date)\s*[:\-]?\s*(\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4})",
             "due_date": r"(?:Due Date|Payment Due|Direct Debit date)\s*[:\-]?\s*(\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4})",
+            "total_charges": r"(?:Total\s+new\s+charges\s+and\s+credits\s*\(including\s+GST\)|Total\s+\(including\s+GST\)|Total\s+charges\s*\(including\s+GST\))\s*[=:\s]*\$?([\d,]+\.?\d*)",
             "total": r"(?:Total(?: Due)?|Amount Due)[:\s]*\$?([\d,]+\.?\d*)",
-            "gst": r"(?:GST|Goods and Services Tax)[:\s]*\$?([\d,]+\.?\d*)",
+            "amount_due": r"(?:Amount\s+[Dd]ue|Direct\s+Debit\s+amount\s+due)\s*[:\s]*\$?([\d,]+\.?\d*)",
+            "gst": r"(?:Total\s+GST\s*\+?|GST|Goods and Services Tax)[:\s]*\$?([\d,]+\.?\d*)",
             "billing_period": r"(?:Bill(?:ing)?\s+period|Billing\s+Period|Period)\s*[:\-]?\s*(\d{1,2}(?:[/-]\d{1,2}[/-]\d{2,4}|\s+[A-Za-z]{3,9}\s+\d{4}))\s*(?:to|-)\s*(\d{1,2}(?:[/-]\d{1,2}[/-]\d{2,4}|\s+[A-Za-z]{3,9}\s+\d{4}))",
         }
 
@@ -112,7 +117,9 @@ class InvoiceParser:
         invoice_date_match = re.search(self._patterns["invoice_date"], text, re.IGNORECASE)
         due_date_match = re.search(self._patterns["due_date"], text, re.IGNORECASE)
         billing_period_match = re.search(self._patterns["billing_period"], text, re.IGNORECASE)
+        total_charges_match = re.search(self._patterns["total_charges"], text, re.IGNORECASE)
         total_match = re.search(self._patterns["total"], text, re.IGNORECASE)
+        amount_due_match = re.search(self._patterns["amount_due"], text, re.IGNORECASE)
         gst_match = re.search(self._patterns["gst"], text, re.IGNORECASE)
 
         line_items = self._parse_line_items(text)
@@ -121,7 +128,17 @@ class InvoiceParser:
 
         subtotal = sum(item["amount"] for item in line_items if item["charge_type"] != "gst")
         gst = Decimal(gst_match.group(1).replace(",", "")) if gst_match else Decimal("0")
-        total = Decimal(total_match.group(1).replace(",", "")) if total_match else (subtotal + gst)
+
+        # Prefer total_charges (e.g. "Total new charges and credits (including GST)")
+        # over the legacy total pattern which may match "Amount due $0.00" on credit accounts.
+        if total_charges_match:
+            total = Decimal(total_charges_match.group(1).replace(",", ""))
+        elif total_match:
+            total = Decimal(total_match.group(1).replace(",", ""))
+        else:
+            total = subtotal + gst
+
+        amount_due = Decimal(amount_due_match.group(1).replace(",", "")) if amount_due_match else total
 
         start = self._parse_date(billing_period_match.group(1)) if billing_period_match else date.today()
         end = self._parse_date(billing_period_match.group(2)) if billing_period_match else start
@@ -143,7 +160,7 @@ class InvoiceParser:
             "subtotal": subtotal,
             "gst": gst,
             "total": total,
-            "amount_due": total,
+            "amount_due": amount_due,
         }
 
     def _parse_line_items(self, text: str) -> list[dict]:
@@ -397,15 +414,32 @@ class InvoiceParser:
             r"(?:Service|Supply|Site|Property)\s+address\s*[:\-]?\s*([^\n]+)",
             r"NMI\s+address\s*[:\-]?\s*([^\n]+)",
         ]
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+        # Strategy 1: labelled line — check same-line capture, then look-ahead
         for pattern in label_patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if not match:
                 continue
+            # Same-line capture
             candidate = self._normalize_address_text(match.group(1))
             if self._looks_like_au_address(candidate):
                 return candidate
+            # Look-ahead: the address may span the next 1-3 lines after the label
+            label_line = match.group(0).split("\n")[0].strip()
+            for idx, line in enumerate(lines):
+                if label_line in line or line in label_line:
+                    merged = []
+                    for offset in range(1, 4):
+                        if idx + offset >= len(lines):
+                            break
+                        merged.append(lines[idx + offset])
+                        candidate = self._normalize_address_text(" ".join(merged))
+                        if self._looks_like_au_address(candidate):
+                            return candidate
+                    break
 
-        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        # Strategy 2: lines near the NMI mention
         for idx, line in enumerate(lines):
             if "nmi" not in line.lower():
                 continue
@@ -436,7 +470,9 @@ class InvoiceParser:
         has_state_postcode = re.search(r"\b(NSW|QLD|VIC|SA|WA|TAS|ACT|NT)\b[ ,]+\d{4}\b", text, re.IGNORECASE)
         has_street_number = re.search(r"\b\d{1,5}\b", text)
         has_street_word = re.search(
-            r"\b(st|street|rd|road|ave|avenue|dr|drive|ct|court|cres|crescent|pl|place|way|pde|parade)\b",
+            r"\b(st|street|rd|road|ave|avenue|dr|drive|ct|court|cres|crescent|"
+            r"pl|place|way|pde|parade|rise|close|cl|circuit|cct|lane|ln|"
+            r"tce|terrace|blvd|boulevard|hwy|highway|esp|esplanade|grove|grv)\b",
             text,
             re.IGNORECASE,
         )
@@ -471,3 +507,135 @@ class InvoiceParser:
     async def get_invoice(self, file_id: str) -> Optional[dict]:
         """Retrieve previously parsed invoice."""
         return self._invoices.get(file_id)
+
+    # ------------------------------------------------------------------
+    # Persistence helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _date_to_str(val) -> Optional[str]:
+        """Convert date/datetime to ISO string for DB storage."""
+        if val is None:
+            return None
+        if isinstance(val, (date, datetime)):
+            return val.isoformat()
+        return str(val)
+
+    @staticmethod
+    def _str_to_date(val: Optional[str]) -> Optional[date]:
+        """Convert ISO string back to date."""
+        if not val:
+            return None
+        try:
+            return date.fromisoformat(val)
+        except (ValueError, TypeError):
+            return None
+
+    def persist_invoice(
+        self,
+        db: Session,
+        file_id: str,
+        invoice_data: dict,
+        confidence: float,
+        warnings: list[str],
+        user_id: Optional[int] = None,
+    ):
+        """Persist parsed invoice to DB (idempotent by file_id)."""
+        from app.models.invoice import Invoice, InvoiceLineItem
+
+        existing = db.query(Invoice).filter(Invoice.file_id == file_id).first()
+        if existing:
+            return existing
+
+        inv = Invoice(
+            file_id=file_id,
+            user_id=user_id,
+            nmi=invoice_data.get("nmi"),
+            retailer=invoice_data.get("retailer"),
+            energy_plan_name=invoice_data.get("energy_plan_name"),
+            network_provider=invoice_data.get("network_provider"),
+            invoice_number=invoice_data.get("invoice_number"),
+            invoice_date=self._date_to_str(invoice_data.get("invoice_date")),
+            due_date=self._date_to_str(invoice_data.get("due_date")),
+            billing_period_start=self._date_to_str(invoice_data.get("billing_period_start")),
+            billing_period_end=self._date_to_str(invoice_data.get("billing_period_end")),
+            service_address=invoice_data.get("service_address"),
+            service_state=invoice_data.get("service_state"),
+            service_postcode=invoice_data.get("service_postcode"),
+            subtotal=float(invoice_data["subtotal"]) if invoice_data.get("subtotal") is not None else None,
+            gst=float(invoice_data["gst"]) if invoice_data.get("gst") is not None else None,
+            total=float(invoice_data["total"]) if invoice_data.get("total") is not None else None,
+            amount_due=float(invoice_data["amount_due"]) if invoice_data.get("amount_due") is not None else None,
+            confidence_score=confidence,
+            warnings_json=json.dumps(warnings) if warnings else None,
+        )
+        db.add(inv)
+        db.flush()  # get inv.id
+
+        for idx, item in enumerate(invoice_data.get("line_items", [])):
+            li = InvoiceLineItem(
+                invoice_id=inv.id,
+                description=item.get("description"),
+                charge_type=item.get("charge_type"),
+                quantity=float(item["quantity"]) if item.get("quantity") is not None else None,
+                unit=item.get("unit"),
+                rate=float(item["rate"]) if item.get("rate") is not None else None,
+                amount=float(item["amount"]) if item.get("amount") is not None else None,
+                tariff_code=item.get("tariff_code"),
+                sort_order=idx,
+            )
+            db.add(li)
+
+        db.commit()
+        return inv
+
+    def get_invoice_from_db(self, db: Session, file_id: str) -> Optional[dict]:
+        """Load invoice from DB and reconstruct the same dict shape as in-memory cache."""
+        from app.models.invoice import Invoice
+
+        inv = db.query(Invoice).filter(Invoice.file_id == file_id).first()
+        if not inv:
+            return None
+
+        line_items = []
+        for li in inv.line_items:
+            line_items.append({
+                "description": li.description,
+                "charge_type": li.charge_type,
+                "quantity": float(li.quantity) if li.quantity is not None else None,
+                "unit": li.unit,
+                "rate": Decimal(str(li.rate)) if li.rate is not None else None,
+                "amount": Decimal(str(li.amount)) if li.amount is not None else None,
+                "tariff_code": li.tariff_code,
+            })
+
+        return {
+            "invoice_number": inv.invoice_number,
+            "invoice_date": self._str_to_date(inv.invoice_date),
+            "due_date": self._str_to_date(inv.due_date),
+            "retailer": inv.retailer,
+            "energy_plan_name": inv.energy_plan_name,
+            "network_provider": inv.network_provider,
+            "service_address": inv.service_address,
+            "service_state": inv.service_state,
+            "service_postcode": inv.service_postcode,
+            "nmi": inv.nmi,
+            "billing_period_start": self._str_to_date(inv.billing_period_start),
+            "billing_period_end": self._str_to_date(inv.billing_period_end),
+            "line_items": line_items,
+            "subtotal": Decimal(str(inv.subtotal)) if inv.subtotal is not None else Decimal("0"),
+            "gst": Decimal(str(inv.gst)) if inv.gst is not None else Decimal("0"),
+            "total": Decimal(str(inv.total)) if inv.total is not None else Decimal("0"),
+            "amount_due": Decimal(str(inv.amount_due)) if inv.amount_due is not None else Decimal("0"),
+        }
+
+    async def get_invoice_with_fallback(self, file_id: str, db: Session) -> Optional[dict]:
+        """Try in-memory first, fall back to DB, backfill cache on hit."""
+        cached = self._invoices.get(file_id)
+        if cached is not None:
+            return cached
+
+        from_db = self.get_invoice_from_db(db, file_id)
+        if from_db is not None:
+            self._invoices[file_id] = from_db
+        return from_db

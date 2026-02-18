@@ -12,6 +12,7 @@ from sqlalchemy import (
     Integer,
     Numeric,
     String,
+    Text,
     Time,
     UniqueConstraint,
 )
@@ -52,6 +53,8 @@ class EnergyPlan(Base):
     effective_to: Mapped[date | None] = mapped_column(Date, nullable=True)
     daily_supply_charge_cents: Mapped[Decimal] = mapped_column(Numeric(12, 4), nullable=False)
     usage_rate_cents_per_kwh: Mapped[Decimal | None] = mapped_column(Numeric(12, 4), nullable=True)
+    feed_in_tariff_cents_per_kwh: Mapped[Decimal | None] = mapped_column(Numeric(12, 4), nullable=True)
+    feed_in_tariffs_json: Mapped[str | None] = mapped_column(Text, nullable=True)
     source_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 

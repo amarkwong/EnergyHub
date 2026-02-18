@@ -246,6 +246,13 @@ def list_energy_plan_history(
 
 
 def _serialize_plan(plan: EnergyPlan) -> EnergyPlanOut:
+    import json as _json
+    feed_in_tariffs: list[dict] = []
+    if plan.feed_in_tariffs_json:
+        try:
+            feed_in_tariffs = _json.loads(plan.feed_in_tariffs_json)
+        except (ValueError, TypeError):
+            pass
     return EnergyPlanOut(
         id=plan.id,
         retailer=plan.retailer.name,
@@ -257,6 +264,8 @@ def _serialize_plan(plan: EnergyPlan) -> EnergyPlanOut:
         effective_to=plan.effective_to,
         daily_supply_charge_cents=plan.daily_supply_charge_cents,
         usage_rate_cents_per_kwh=plan.usage_rate_cents_per_kwh,
+        feed_in_tariff_cents_per_kwh=plan.feed_in_tariff_cents_per_kwh,
+        feed_in_tariffs=feed_in_tariffs,
         source_url=plan.source_url,
         is_active=plan.is_active,
     )

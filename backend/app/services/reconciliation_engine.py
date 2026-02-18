@@ -1,8 +1,11 @@
 """Invoice reconciliation engine."""
+import json
 import uuid
 from datetime import date, datetime
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Optional
+
+from sqlalchemy.orm import Session
 
 from app.schemas.reconciliation import DiscrepancyStatus
 from app.services.invoice_parser import InvoiceParser
@@ -29,7 +32,8 @@ class ReconciliationEngine:
         nem12_file_id: str,
         network_tariff_code: Optional[str] = None,
         retail_plan_name: Optional[str] = None,
-        tolerance_percent: float = 1.0
+        tolerance_percent: float = 1.0,
+        db: Optional[Session] = None,
     ) -> dict:
         """
         Run reconciliation between parsed invoice and calculated values.
@@ -126,6 +130,10 @@ class ReconciliationEngine:
 
         # Store for later retrieval
         self._reconciliations[reconciliation_id] = result
+
+        # Persist to DB if session available
+        if db is not None:
+            self.persist_reconciliation(db, result, invoice_file_id=invoice_file_id)
 
         return result
 
@@ -313,11 +321,16 @@ class ReconciliationEngine:
 
         return recommendations
 
-    async def get_reconciliation(self, reconciliation_id: str) -> Optional[dict]:
-        """Get a stored reconciliation result."""
-        return self._reconciliations.get(reconciliation_id)
+    async def get_reconciliation(self, reconciliation_id: str, db: Optional[Session] = None) -> Optional[dict]:
+        """Get a stored reconciliation result, falling back to DB."""
+        cached = self._reconciliations.get(reconciliation_id)
+        if cached is not None:
+            return cached
+        if db is not None:
+            return self.get_reconciliation_from_db(db, reconciliation_id)
+        return None
 
-    async def get_history(self, nmi: str, limit: int = 10) -> list[dict]:
+    async def get_history(self, nmi: str, limit: int = 10, db: Optional[Session] = None) -> list[dict]:
         """Get reconciliation history for an NMI."""
         history = [
             {
@@ -333,7 +346,114 @@ class ReconciliationEngine:
             for r in self._reconciliations.values()
             if r.get('nmi') == nmi
         ]
+        # Supplement with DB results if available
+        if db is not None:
+            db_history = self.get_history_from_db(db, nmi, limit)
+            seen_ids = {h['reconciliation_id'] for h in history}
+            for item in db_history:
+                if item['reconciliation_id'] not in seen_ids:
+                    history.append(item)
         return history[:limit]
+
+    # ------------------------------------------------------------------
+    # Persistence helpers
+    # ------------------------------------------------------------------
+
+    def persist_reconciliation(
+        self, db: Session, result: dict, invoice_file_id: Optional[str] = None
+    ) -> None:
+        """Persist reconciliation summary to DB (idempotent by reconciliation_id)."""
+        from app.models.invoice import Invoice, ReconciliationResult
+
+        rec_id = result.get("reconciliation_id")
+        existing = db.query(ReconciliationResult).filter(
+            ReconciliationResult.reconciliation_id == rec_id
+        ).first()
+        if existing:
+            return
+
+        # Resolve invoice FK if possible
+        invoice_db_id = None
+        if invoice_file_id:
+            inv = db.query(Invoice).filter(Invoice.file_id == invoice_file_id).first()
+            if inv:
+                invoice_db_id = inv.id
+
+        rec = ReconciliationResult(
+            reconciliation_id=rec_id,
+            invoice_id=invoice_db_id,
+            nem12_file_id=result.get("nem12_file_id"),
+            network_tariff_code=result.get("network_tariff_code"),
+            retail_plan_name=result.get("retail_plan_name"),
+            overall_status=result.get("overall_status"),
+            confidence_score=result.get("confidence_score"),
+            invoiced_total=float(result["invoiced_total"]) if result.get("invoiced_total") is not None else None,
+            calculated_total=float(result["calculated_total"]) if result.get("calculated_total") is not None else None,
+            total_difference=float(result["total_difference"]) if result.get("total_difference") is not None else None,
+            recommendations_json=json.dumps(result.get("recommendations", [])),
+        )
+        db.add(rec)
+        db.commit()
+
+    def get_reconciliation_from_db(self, db: Session, reconciliation_id: str) -> Optional[dict]:
+        """Load reconciliation from DB."""
+        from app.models.invoice import ReconciliationResult
+
+        rec = db.query(ReconciliationResult).filter(
+            ReconciliationResult.reconciliation_id == reconciliation_id
+        ).first()
+        if not rec:
+            return None
+
+        recommendations = []
+        if rec.recommendations_json:
+            try:
+                recommendations = json.loads(rec.recommendations_json)
+            except (json.JSONDecodeError, TypeError):
+                pass
+
+        return {
+            "reconciliation_id": rec.reconciliation_id,
+            "overall_status": rec.overall_status,
+            "confidence_score": rec.confidence_score or 0.0,
+            "invoiced_total": Decimal(str(rec.invoiced_total)) if rec.invoiced_total is not None else Decimal("0"),
+            "calculated_total": Decimal(str(rec.calculated_total)) if rec.calculated_total is not None else Decimal("0"),
+            "total_difference": Decimal(str(rec.total_difference)) if rec.total_difference is not None else Decimal("0"),
+            "recommendations": recommendations,
+            "line_items": [],
+            "matched_items": 0,
+            "minor_discrepancies": 0,
+            "significant_discrepancies": 0,
+            "missing_items": 0,
+            "total_percentage_difference": 0.0,
+        }
+
+    def get_history_from_db(self, db: Session, nmi: str, limit: int = 10) -> list[dict]:
+        """Load reconciliation history from DB via joined invoice NMI."""
+        from app.models.invoice import Invoice, ReconciliationResult
+
+        rows = (
+            db.query(ReconciliationResult)
+            .join(Invoice, ReconciliationResult.invoice_id == Invoice.id, isouter=True)
+            .filter(Invoice.nmi == nmi)
+            .order_by(ReconciliationResult.created_at.desc())
+            .limit(limit)
+            .all()
+        )
+        history = []
+        for rec in rows:
+            inv = db.query(Invoice).filter(Invoice.id == rec.invoice_id).first() if rec.invoice_id else None
+            history.append({
+                "reconciliation_id": rec.reconciliation_id,
+                "nmi": inv.nmi if inv else nmi,
+                "invoice_number": inv.invoice_number if inv else None,
+                "billing_period_start": inv.billing_period_start if inv else None,
+                "billing_period_end": inv.billing_period_end if inv else None,
+                "overall_status": rec.overall_status,
+                "total_difference": Decimal(str(rec.total_difference)) if rec.total_difference is not None else Decimal("0"),
+                "reconciled_at": rec.created_at.date() if rec.created_at else date.today(),
+            })
+        return history
 
     async def export(self, reconciliation_id: str, format: str) -> Optional[dict]:
         """Export reconciliation results."""

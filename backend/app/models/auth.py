@@ -60,6 +60,10 @@ class UserNmi(Base):
 
 class UserNmiPlanAssignment(Base):
     __tablename__ = "user_nmi_plan_assignments"
+    __table_args__ = (
+        UniqueConstraint("user_nmi_id", "effective_from", "effective_to",
+                         name="uq_user_nmi_plan_assignment_period"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     user_nmi_id: Mapped[int] = mapped_column(ForeignKey("user_nmis.id", ondelete="CASCADE"), nullable=False, index=True)

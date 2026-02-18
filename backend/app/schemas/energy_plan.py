@@ -26,6 +26,8 @@ class EnergyPlanOut(BaseModel):
     effective_to: Optional[date] = None
     daily_supply_charge_cents: Decimal
     usage_rate_cents_per_kwh: Optional[Decimal] = None
+    feed_in_tariff_cents_per_kwh: Optional[Decimal] = None
+    feed_in_tariffs: list[dict] = []
     source_url: Optional[str] = None
     is_active: bool
 
@@ -65,7 +67,7 @@ class EnergyPlanRefreshResponse(BaseModel):
 class EmeFetchRequest(BaseModel):
     retailers: list[str] = Field(default_factory=lambda: ["agl", "origin", "energyaustralia"])
     page_size: int = Field(20, ge=1, le=100)
-    max_plans_per_retailer: int = Field(100, ge=1, le=1000)
+    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
     fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
     timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
     persist_to_retail_catalog: bool = True
@@ -96,7 +98,7 @@ class EmeFetchAllRetailersRequest(BaseModel):
         description="Source page URL for retailer dropdown",
     )
     page_size: int = Field(20, ge=1, le=100)
-    max_plans_per_retailer: int = Field(100, ge=1, le=1000)
+    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
     fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
     timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
     persist_to_retail_catalog: bool = True

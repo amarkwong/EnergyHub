@@ -9,7 +9,6 @@ import Consumption from './pages/Consumption'
 import Reconciliation from './pages/Reconciliation'
 import Tariffs from './pages/Tariffs'
 import Retailers from './pages/Retailers'
-import MapPage from './pages/Map'
 import Emulator from './pages/Emulator'
 import Summary from './pages/Summary'
 import Login from './pages/Login'
@@ -53,7 +52,6 @@ function App() {
             <Route path="network" element={<Tariffs />} />
             <Route path="tariffs" element={<Tariffs />} />
             <Route path="retailers" element={<Retailers />} />
-            <Route path="map" element={<MapPage />} />
             <Route path="emulator" element={<Emulator />} />
             <Route path="summary" element={<Summary />} />
           </Route>

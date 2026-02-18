@@ -1,13 +1,4 @@
 {
-  "metadata": {
-    "generated_at_utc": "2026-02-11T11:23:17.404648+00:00",
-    "source": "AER CDR Energy Product Reference Data API",
-    "base_url": "https://cdr.energymadeeasy.gov.au",
-    "retailers": [
-      "agl"
-    ],
-    "fuel_type": "ELECTRICITY"
-  },
   "plans": [
     {
       "retailer": "AGL",
@@ -18,7 +9,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -54,6 +122,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 98.21,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -88,7 +157,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -123,7 +269,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -158,7 +381,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 87.26,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 36.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 36.77,
+          "start_time": "16:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.65,
+          "start_time": "14:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.65,
+          "start_time": "20:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 24.3,
+          "start_time": "10:00",
+          "end_time": "13:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -183,7 +468,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -219,6 +566,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 98.21,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -253,7 +601,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 173.18,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.15,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.15,
+          "start_time": "07:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.15,
+          "start_time": "17:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 25.96,
+          "start_time": "22:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 25.96,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 28.5,
+          "start_time": "09:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 28.5,
+          "start_time": "20:00",
+          "end_time": "21:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -278,7 +703,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 83.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.63,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.63,
+          "start_time": "15:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 27.51,
+          "start_time": "14:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 27.51,
+          "start_time": "21:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 19.58,
+          "start_time": "10:00",
+          "end_time": "13:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -303,7 +790,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 156.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 46.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 46.51,
+          "start_time": "07:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 46.51,
+          "start_time": "17:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.2,
+          "start_time": "22:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.2,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 38.28,
+          "start_time": "09:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 38.28,
+          "start_time": "20:00",
+          "end_time": "21:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -328,7 +892,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 156.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 46.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 46.51,
+          "start_time": "07:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 46.51,
+          "start_time": "17:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.2,
+          "start_time": "22:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.2,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 38.28,
+          "start_time": "09:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 38.28,
+          "start_time": "20:00",
+          "end_time": "21:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -354,6 +995,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 160.65,
       "usage_rate_cents_per_kwh": 34.91,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -379,6 +1021,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -413,7 +1056,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -449,6 +1154,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 87.26,
       "usage_rate_cents_per_kwh": 31.07,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -474,6 +1180,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 160.65,
       "usage_rate_cents_per_kwh": 34.91,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -499,6 +1206,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 83.21,
       "usage_rate_cents_per_kwh": 30.68,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -524,6 +1232,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -558,7 +1267,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 173.18,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.15,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.15,
+          "start_time": "07:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.15,
+          "start_time": "17:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 25.96,
+          "start_time": "22:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 25.96,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 28.5,
+          "start_time": "09:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 28.5,
+          "start_time": "20:00",
+          "end_time": "21:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -584,6 +1370,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 83.21,
       "usage_rate_cents_per_kwh": 30.68,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -608,7 +1395,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 83.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.63,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.63,
+          "start_time": "15:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 27.51,
+          "start_time": "14:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 27.51,
+          "start_time": "21:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 19.58,
+          "start_time": "10:00",
+          "end_time": "13:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -633,7 +1482,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 87.26,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 36.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 36.77,
+          "start_time": "16:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.65,
+          "start_time": "14:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.65,
+          "start_time": "20:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 24.3,
+          "start_time": "10:00",
+          "end_time": "13:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -659,6 +1570,7 @@
       "effective_from": "2026-02-01",
       "daily_supply_charge_cents": 87.26,
       "usage_rate_cents_per_kwh": 31.07,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -684,6 +1596,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
       "usage_rate_cents_per_kwh": 24.61,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -709,6 +1622,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
       "usage_rate_cents_per_kwh": 24.31,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -734,6 +1648,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
       "usage_rate_cents_per_kwh": 23.59,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -759,6 +1674,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
       "usage_rate_cents_per_kwh": 23.59,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -784,6 +1700,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
       "usage_rate_cents_per_kwh": 24.31,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -809,6 +1726,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
       "usage_rate_cents_per_kwh": 24.61,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -834,6 +1752,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
       "usage_rate_cents_per_kwh": 28.44,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -859,6 +1778,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
       "usage_rate_cents_per_kwh": 28.44,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -884,6 +1804,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
       "usage_rate_cents_per_kwh": 22.36,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -909,6 +1830,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
       "usage_rate_cents_per_kwh": 22.36,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -934,6 +1856,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
       "usage_rate_cents_per_kwh": 24.61,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -959,6 +1882,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
       "usage_rate_cents_per_kwh": 24.31,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -984,6 +1908,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
       "usage_rate_cents_per_kwh": 23.59,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1009,6 +1934,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
       "usage_rate_cents_per_kwh": 23.59,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1034,6 +1960,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
       "usage_rate_cents_per_kwh": 24.31,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1059,6 +1986,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
       "usage_rate_cents_per_kwh": 24.61,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1084,6 +2012,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
       "usage_rate_cents_per_kwh": 28.44,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1109,6 +2038,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
       "usage_rate_cents_per_kwh": 28.44,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1134,6 +2064,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
       "usage_rate_cents_per_kwh": 22.36,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1159,6 +2090,7 @@
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
       "usage_rate_cents_per_kwh": 22.36,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1183,7 +2115,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.39,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.39,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1208,7 +2187,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 30.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 30.77,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1233,7 +2259,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.05,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.05,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1258,7 +2331,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.72,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.72,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1283,7 +2403,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.3,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.3,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1308,7 +2475,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.3,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.3,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1333,7 +2547,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.39,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.39,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1358,7 +2619,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 30.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 30.77,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1383,7 +2691,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.05,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.05,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1408,7 +2763,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.72,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.72,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1433,7 +2835,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.39,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.39,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1458,7 +2907,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 30.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 30.77,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1483,7 +2979,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.05,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.05,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1508,7 +3051,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.72,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.72,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1533,7 +3123,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.3,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.3,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1558,7 +3195,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 115.74,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.3,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.3,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.62,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1583,7 +3267,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 95.3,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.39,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.39,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.81,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1608,7 +3339,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 100.64,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 30.77,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 30.77,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.37,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1633,7 +3411,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 111.96,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.05,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.05,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.35,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1658,7 +3483,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-31",
       "daily_supply_charge_cents": 101.51,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 29.72,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 29.72,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 18.04,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -1683,7 +3555,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1718,7 +3652,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.52,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.52,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 17.76,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -1754,6 +3750,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1789,6 +3786,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -1797,8 +3795,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1807,8 +3806,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -1823,7 +3823,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1859,6 +3921,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
       "usage_rate_cents_per_kwh": 26.84,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -1894,6 +3957,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1929,6 +3993,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1963,7 +4028,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -1998,7 +4125,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.52,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.52,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 17.76,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -2033,7 +4222,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2069,6 +4320,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2103,7 +4355,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2138,7 +4452,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2173,7 +4549,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2208,7 +4646,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2244,6 +4744,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2279,6 +4780,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2314,6 +4816,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2349,6 +4852,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2384,6 +4888,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2419,6 +4924,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2453,7 +4959,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2489,6 +5057,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2523,7 +5092,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -2532,8 +5163,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2542,8 +5174,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -2559,6 +5192,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
       "usage_rate_cents_per_kwh": 26.84,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -2594,6 +5228,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2628,7 +5263,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2663,7 +5360,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2699,6 +5458,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2733,7 +5493,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2768,7 +5590,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -2777,8 +5661,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2787,8 +5672,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -2803,7 +5689,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2838,7 +5786,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2874,6 +5884,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -2882,8 +5893,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2892,8 +5904,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -2909,6 +5922,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2944,6 +5958,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -2979,6 +5994,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3013,7 +6029,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3048,7 +6126,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3084,6 +6224,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3119,6 +6260,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3154,6 +6296,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3188,7 +6331,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3223,7 +6428,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3258,7 +6525,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3267,8 +6596,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3277,8 +6607,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -3294,6 +6625,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
       "usage_rate_cents_per_kwh": 26.84,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -3328,7 +6660,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3363,7 +6757,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3372,8 +6828,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3382,8 +6839,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -3398,7 +6856,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.52,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.52,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 17.76,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -3434,6 +6954,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3442,8 +6963,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3452,8 +6974,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -3469,6 +6992,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3503,7 +7027,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3538,7 +7124,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3573,7 +7221,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3582,8 +7292,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3592,8 +7303,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -3609,6 +7321,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 113.44,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3644,6 +7357,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
       "usage_rate_cents_per_kwh": 26.84,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -3678,7 +7392,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 104.62,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.52,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.52,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 17.76,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 26.84,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.0,
@@ -3714,6 +7490,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3722,8 +7499,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3732,8 +7510,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -3748,7 +7527,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 41.08,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 41.08,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.54,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 31.04,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3757,8 +7598,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3767,8 +7609,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -3783,7 +7626,69 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.51,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.51,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.1,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3819,6 +7724,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 120.66,
       "usage_rate_cents_per_kwh": 29.1,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3854,6 +7760,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3862,8 +7769,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3872,8 +7780,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -3889,6 +7798,7 @@
       "effective_from": "2026-01-22",
       "daily_supply_charge_cents": 121.0,
       "usage_rate_cents_per_kwh": 31.04,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 10.0,
@@ -3897,8 +7807,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -3907,8 +7818,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -3924,6 +7836,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
       "usage_rate_cents_per_kwh": 25.16,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -3949,6 +7862,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
       "usage_rate_cents_per_kwh": 30.34,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -3974,6 +7888,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
       "usage_rate_cents_per_kwh": 23.85,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -3999,6 +7914,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
       "usage_rate_cents_per_kwh": 25.16,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4024,6 +7940,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
       "usage_rate_cents_per_kwh": 25.93,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4049,6 +7966,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
       "usage_rate_cents_per_kwh": 25.93,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4074,6 +7992,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
       "usage_rate_cents_per_kwh": 26.26,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4099,6 +8018,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
       "usage_rate_cents_per_kwh": 30.34,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4124,6 +8044,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
       "usage_rate_cents_per_kwh": 26.26,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4149,6 +8070,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
       "usage_rate_cents_per_kwh": 23.85,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4174,6 +8096,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
       "usage_rate_cents_per_kwh": 25.16,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4199,6 +8122,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
       "usage_rate_cents_per_kwh": 25.16,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4224,6 +8148,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
       "usage_rate_cents_per_kwh": 25.93,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4249,6 +8174,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
       "usage_rate_cents_per_kwh": 25.93,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4274,6 +8200,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
       "usage_rate_cents_per_kwh": 26.26,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4299,6 +8226,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
       "usage_rate_cents_per_kwh": 30.34,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4324,6 +8252,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
       "usage_rate_cents_per_kwh": 26.26,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4349,6 +8278,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
       "usage_rate_cents_per_kwh": 30.34,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4374,6 +8304,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
       "usage_rate_cents_per_kwh": 23.85,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4398,7 +8329,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.48,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.48,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4424,6 +8402,7 @@
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
       "usage_rate_cents_per_kwh": 23.85,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4448,7 +8427,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 32.82,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 32.82,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4473,7 +8499,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 40.86,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 40.86,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4498,7 +8571,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.7,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.7,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4523,7 +8643,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.25,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.25,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4548,7 +8715,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.48,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.48,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4573,7 +8787,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 32.82,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 32.82,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4598,7 +8859,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.25,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.25,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4623,7 +8931,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.7,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.7,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4648,7 +9003,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 40.86,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 40.86,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4673,7 +9075,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.7,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.7,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4698,7 +9147,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.48,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.48,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4723,7 +9219,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.25,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.25,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4748,7 +9291,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 32.82,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 32.82,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4773,7 +9363,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 40.86,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 40.86,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4798,7 +9435,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 108.27,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 31.7,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 31.7,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 19.25,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4823,7 +9507,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 101.65,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 33.48,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 33.48,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.06,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4848,7 +9579,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 107.35,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 32.82,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 32.82,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.66,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4873,7 +9651,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 119.42,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.25,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.25,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.64,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4898,7 +9723,54 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-21",
       "daily_supply_charge_cents": 123.45,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 40.86,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 40.86,
+          "start_time": "15:00",
+          "end_time": "21:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "21:00",
+          "end_time": "00:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.93,
+          "start_time": "00:00",
+          "end_time": "15:00",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 1.5,
@@ -4923,7 +9795,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 101.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.11,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 22.7,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -4932,8 +9881,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -4942,8 +9892,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -4958,7 +9909,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 101.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.11,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 22.7,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -4967,8 +9995,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -4977,8 +10006,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -4993,7 +10023,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 101.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.11,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 22.7,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -5002,8 +10109,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5012,8 +10120,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -5029,6 +10138,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 101.38,
       "usage_rate_cents_per_kwh": 40.94,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -5037,8 +10147,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5047,8 +10158,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -5064,6 +10176,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 101.38,
       "usage_rate_cents_per_kwh": 40.94,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -5072,8 +10185,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5082,8 +10196,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -5098,7 +10213,83 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 39.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 39.4,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 24.61,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "16:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5134,6 +10325,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
       "usage_rate_cents_per_kwh": 28.38,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5169,6 +10361,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
       "usage_rate_cents_per_kwh": 25.54,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5204,6 +10397,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
       "usage_rate_cents_per_kwh": 25.54,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5238,7 +10432,83 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 39.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 39.4,
+          "start_time": "16:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 24.61,
+          "start_time": "09:00",
+          "end_time": "15:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "21:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "16:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 29.53,
+          "start_time": "00:00",
+          "end_time": "08:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5274,6 +10544,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 131.18,
       "usage_rate_cents_per_kwh": 28.38,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 3.0,
@@ -5308,7 +10579,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5343,7 +10691,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 105.43,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5379,6 +10804,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 105.43,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5413,7 +10839,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5448,7 +10951,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 105.43,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5483,7 +11063,104 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 117.68,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 44.64,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "16:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5518,7 +11195,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 105.43,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5553,7 +11307,45 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 941.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.98,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.98,
+          "start_time": "07:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 33.01,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 33.01,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5588,7 +11380,104 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 117.68,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 44.64,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "16:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5624,6 +11513,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 98.21,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5658,7 +11548,104 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 117.68,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 44.64,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 44.64,
+          "start_time": "17:00",
+          "end_time": "20:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "16:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "16:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 37.75,
+          "start_time": "07:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 30.86,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5694,6 +11681,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 93.4,
       "usage_rate_cents_per_kwh": 39.4,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5728,7 +11716,45 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 941.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 35.98,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 35.98,
+          "start_time": "07:00",
+          "end_time": "20:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 33.01,
+          "start_time": "21:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 33.01,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5764,6 +11790,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 105.43,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5798,7 +11825,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 98.21,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 47.85,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 47.85,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 31.1,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 21.99,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5834,6 +11938,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 93.4,
       "usage_rate_cents_per_kwh": 39.4,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5869,6 +11974,7 @@
       "effective_from": "2026-01-08",
       "daily_supply_charge_cents": 98.21,
       "usage_rate_cents_per_kwh": 39.66,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5903,7 +12009,71 @@
       "customer_type": "BUSINESS",
       "effective_from": "2026-01-01",
       "daily_supply_charge_cents": 532.63,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 38.76,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 38.76,
+          "start_time": "14:00",
+          "end_time": "19:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.6,
+          "start_time": "22:00",
+          "end_time": "06:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 20.6,
+          "start_time": "00:00",
+          "end_time": "23:59",
+          "days": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 33.41,
+          "start_time": "07:00",
+          "end_time": "13:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 33.41,
+          "start_time": "20:00",
+          "end_time": "21:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 4.0,
@@ -5938,7 +12108,99 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-01",
       "daily_supply_charge_cents": 116.08,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.26,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.26,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.26,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.26,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.01,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 0.0,
+          "start_time": "10:00",
+          "end_time": "12:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder1",
+          "rate_cents_per_kwh": 22.64,
+          "start_time": "13:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 0.0,
@@ -5974,6 +12236,7 @@
       "effective_from": "2026-01-01",
       "daily_supply_charge_cents": 101.38,
       "usage_rate_cents_per_kwh": 40.94,
+      "tou_rates": [],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -5982,8 +12245,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -5992,8 +12256,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "flat",
@@ -6008,7 +12273,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-01",
       "daily_supply_charge_cents": 101.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.11,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 22.7,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -6017,8 +12359,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -6027,8 +12370,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -6043,7 +12387,84 @@
       "customer_type": "RESIDENTIAL",
       "effective_from": "2026-01-01",
       "daily_supply_charge_cents": 101.38,
-      "usage_rate_cents_per_kwh": null,
+      "usage_rate_cents_per_kwh": 49.4,
+      "tou_rates": [
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "06:00",
+          "end_time": "09:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "15:00",
+          "end_time": "23:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "peak",
+          "rate_cents_per_kwh": 49.4,
+          "start_time": "00:00",
+          "end_time": "00:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "off_peak",
+          "rate_cents_per_kwh": 32.11,
+          "start_time": "01:00",
+          "end_time": "05:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "name": "shoulder",
+          "rate_cents_per_kwh": 22.7,
+          "start_time": "10:00",
+          "end_time": "14:59",
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
       "feed_in_tariffs": [
         {
           "unit_price_cents_per_kwh": 8.0,
@@ -6052,8 +12473,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 0.0,
+          "tier_max_kwh": 10.0,
+          "tier_inferred": true
         },
         {
           "unit_price_cents_per_kwh": 2.0,
@@ -6062,8 +12484,9 @@
           "period_name": null,
           "time_from": null,
           "time_to": null,
-          "tier_min_kwh": null,
-          "tier_max_kwh": null
+          "tier_min_kwh": 10.0,
+          "tier_max_kwh": null,
+          "tier_inferred": true
         }
       ],
       "tariff_type": "tou",
@@ -6072,9 +12495,8 @@
   ],
   "stats": {
     "agl": {
-      "pages_fetched": 17,
-      "detail_calls": 200,
-      "plans_normalized": 200
+      "pages_fetched": 21,
+      "detail_calls": 200
     }
   }
 }

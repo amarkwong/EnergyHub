@@ -64,7 +64,7 @@ export default function MapPage() {
 
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
-      style: 'https://demotiles.maplibre.org/style.json',
+      style: 'https://tiles.openfreemap.org/styles/liberty',
       center: [134.5, -25.8],
       zoom: 3.2,
       minZoom: 2.5,

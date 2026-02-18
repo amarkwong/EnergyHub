@@ -107,13 +107,13 @@ const localLogoByNetwork: Record<string, string> = {
   endeavour_energy: "/logos/network/endeavour-energy.svg",
   essential_energy: "/logos/network/essential-energy.svg",
   energex: "/logos/network/energex.svg",
-  ergon_energy: "",
+  ergon_energy: "/logos/network/ergon-energy.svg",
   ausnet_services: "/logos/network/ausnet-services.svg",
   citipower: "/logos/network/citipower.svg",
-  jemena: "/logos/network/jemena.png",
+  jemena: "/logos/network/jemena.svg",
   powercor: "/logos/network/powercor.svg",
-  united_energy: "",
-  evoenergy: "/logos/network/evoenergy.png",
+  united_energy: "/logos/network/united-energy.svg",
+  evoenergy: "/logos/network/evoenergy.svg",
   tasnetworks: "/logos/network/tasnetworks.svg",
 };
 

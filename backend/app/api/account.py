@@ -1,14 +1,20 @@
 """Account-level endpoints for NMI ownership and plan assignments."""
 from __future__ import annotations
 
+from datetime import date, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db, init_db
 from app.models.auth import User, UserNmi, UserNmiPlanAssignment
+from app.models.invoice import Invoice
 from app.models.meter_data import MeterDataInterval
 from app.schemas.auth import (
+    BillingGap,
+    DashboardSummary,
+    InvoiceSummaryItem,
     NmiCreateRequest,
     NmiLocationOut,
     NmiOut,
@@ -21,6 +27,144 @@ from app.services.invoice_parser import InvoiceParser
 
 router = APIRouter()
 invoice_parser = InvoiceParser()
+
+
+@router.get("/dashboard-summary", response_model=DashboardSummary)
+def dashboard_summary(
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    init_db()
+
+    # 1. Get user's NMIs
+    user_nmis = db.query(UserNmi.nmi).filter(UserNmi.user_id == user.id).all()
+    nmi_list = [row.nmi for row in user_nmis]
+
+    if not nmi_list:
+        return DashboardSummary(
+            invoice_total=0,
+            usage_kwh=0,
+            controlled_load_kwh=0,
+            solar_export_kwh=0,
+        )
+
+    # 2. Query all invoices for those NMIs belonging to this user
+    all_invoices = (
+        db.query(Invoice)
+        .filter(
+            Invoice.user_id == user.id,
+            Invoice.nmi.in_(nmi_list),
+            Invoice.billing_period_start.isnot(None),
+            Invoice.billing_period_end.isnot(None),
+        )
+        .order_by(Invoice.created_at.desc())
+        .all()
+    )
+
+    # 3. Deduplicate by (nmi, billing_period_start, billing_period_end) — keep latest by created_at
+    seen: set[tuple[str, str, str]] = set()
+    deduped: list[Invoice] = []
+    for inv in all_invoices:
+        key = (inv.nmi or "", inv.billing_period_start or "", inv.billing_period_end or "")
+        if key not in seen:
+            seen.add(key)
+            deduped.append(inv)
+
+    if not deduped:
+        return DashboardSummary(
+            invoice_total=0,
+            usage_kwh=0,
+            controlled_load_kwh=0,
+            solar_export_kwh=0,
+        )
+
+    # 4. Sum totals
+    invoice_total = sum(float(inv.total) for inv in deduped if inv.total is not None)
+
+    # 5. Global billing period span
+    def parse_date(s: str) -> date:
+        return date.fromisoformat(s)
+
+    all_starts = [parse_date(inv.billing_period_start) for inv in deduped if inv.billing_period_start]
+    all_ends = [parse_date(inv.billing_period_end) for inv in deduped if inv.billing_period_end]
+    period_start = min(all_starts)
+    period_end = max(all_ends)
+
+    # 6. Detect billing gaps — sort deduped invoices by period start, find gaps
+    sorted_invoices = sorted(deduped, key=lambda i: parse_date(i.billing_period_start))
+    billing_gaps: list[BillingGap] = []
+    for idx in range(1, len(sorted_invoices)):
+        prev_end = parse_date(sorted_invoices[idx - 1].billing_period_end)
+        curr_start = parse_date(sorted_invoices[idx].billing_period_start)
+        if prev_end + timedelta(days=1) < curr_start:
+            billing_gaps.append(BillingGap(
+                gap_start=prev_end + timedelta(days=1),
+                gap_end=curr_start - timedelta(days=1),
+            ))
+
+    # 7. Build invoice summary items
+    invoice_items = [
+        InvoiceSummaryItem(
+            invoice_number=inv.invoice_number,
+            billing_period_start=parse_date(inv.billing_period_start),
+            billing_period_end=parse_date(inv.billing_period_end),
+            total=float(inv.total) if inv.total is not None else 0,
+        )
+        for inv in sorted_invoices
+    ]
+
+    # 8. Query meter data scoped to the billing period
+    # CDR imports can create duplicate rows for the same interval — deduplicate
+    # by (nmi, register_code, start_at) via a subquery first.
+    deduped = (
+        db.query(
+            MeterDataInterval.profile_read_value,
+            MeterDataInterval.rate_type_description,
+        )
+        .filter(
+            MeterDataInterval.nmi.in_(nmi_list),
+            MeterDataInterval.start_at >= period_start.isoformat(),
+            MeterDataInterval.start_at < (period_end + timedelta(days=1)).isoformat(),
+        )
+        .group_by(
+            MeterDataInterval.nmi,
+            MeterDataInterval.register_code,
+            MeterDataInterval.start_at,
+        )
+        .subquery()
+    )
+
+    # Usage = everything except Solar
+    usage_row = (
+        db.query(func.coalesce(func.sum(deduped.c.profile_read_value), 0))
+        .filter(~deduped.c.rate_type_description.ilike("%Solar%"))
+        .scalar()
+    )
+
+    # Controlled load
+    controlled_row = (
+        db.query(func.coalesce(func.sum(deduped.c.profile_read_value), 0))
+        .filter(deduped.c.rate_type_description.ilike("%Controlledload%"))
+        .scalar()
+    )
+
+    # Solar export
+    solar_row = (
+        db.query(func.coalesce(func.sum(deduped.c.profile_read_value), 0))
+        .filter(deduped.c.rate_type_description.ilike("%Solar%"))
+        .scalar()
+    )
+
+    return DashboardSummary(
+        invoice_total=round(invoice_total, 2),
+        billing_period_start=period_start,
+        billing_period_end=period_end,
+        billing_gaps=billing_gaps,
+        usage_kwh=round(float(usage_row), 2),
+        controlled_load_kwh=round(float(controlled_row), 2),
+        solar_export_kwh=round(float(solar_row), 2),
+        invoices=invoice_items,
+    )
 
 
 @router.get("/nmis", response_model=list[NmiOut])
@@ -74,7 +218,7 @@ async def list_nmi_locations(user: User = Depends(get_current_user), db: Session
         invoice_total = None
         invoice_number = None
         if latest and latest.source_invoice_file_id:
-            invoice = await invoice_parser.get_invoice(latest.source_invoice_file_id)
+            invoice = await invoice_parser.get_invoice_with_fallback(latest.source_invoice_file_id, db)
             if invoice:
                 total = invoice.get("total")
                 invoice_total = float(total) if total is not None else None

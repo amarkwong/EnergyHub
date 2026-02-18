@@ -13,7 +13,6 @@ const residentialNavigation = [
   { name: 'Summary', href: '/summary' },
   { name: 'Network', href: '/network' },
   { name: 'Retailers', href: '/retailers' },
-  { name: 'Map', href: '/map' },
 ]
 
 const businessNavigation = [
@@ -25,7 +24,6 @@ const businessNavigation = [
   { name: 'Summary', href: '/summary' },
   { name: 'Network Charges', href: '/network' },
   { name: 'Retail Contracts', href: '/retailers' },
-  { name: 'Map', href: '/map' },
 ]
 
 export default function Layout() {

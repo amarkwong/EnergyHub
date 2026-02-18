@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { CartesianGrid, Legend, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { api } from '../api/client'
 import EntityLogo from '../components/EntityLogo'
 
@@ -228,35 +228,65 @@ export default function Tariffs() {
             <p className="mt-3 text-slate-500">Loading tariffs...</p>
           ) : (
             <div className="mt-4 space-y-3">
-              {tariffs.map((tariff) => (
-                <button
-                  key={`${tariff.tariff_code}-${tariff.effective_from}`}
-                  onClick={() => setSelectedTariffKey(`${tariff.tariff_code}-${tariff.effective_from}`)}
-                  className={`w-full text-left rounded-md border p-3 ${
-                    activeTariff && `${tariff.tariff_code}-${tariff.effective_from}` === `${activeTariff.tariff_code}-${activeTariff.effective_from}`
-                      ? 'border-primary-500 bg-primary-50'
-                      : 'border-slate-200'
-                  }`}
-                >
-                  <div className="font-medium text-slate-900">{tariff.tariff_name}</div>
-                  <div className="text-sm text-slate-600">
-                    {tariff.tariff_code} | {tariff.tariff_type.toUpperCase()} | Effective {tariff.effective_from}
-                  </div>
-                  <div className="text-sm text-slate-600">
-                    Daily {tariff.daily_supply_charge_cents}c/day
-                    {tariff.usage_rate_cents_per_kwh ? ` | Usage ${tariff.usage_rate_cents_per_kwh}c/kWh` : ''}
-                  </div>
-                  {!!tariff.time_periods?.length && (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {tariff.time_periods.map((period, idx) => (
-                        <span key={idx} className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-700">
-                          {period.name}: {period.rate_cents_per_kwh}c/kWh
-                        </span>
-                      ))}
+              {tariffs.map((tariff) => {
+                const tariffKey = `${tariff.tariff_code}-${tariff.effective_from}`
+                const isActive = activeTariff && tariffKey === `${activeTariff.tariff_code}-${activeTariff.effective_from}`
+                const periods = tariff.time_periods ?? []
+                const hasRates = periods.some((p) => toChartCents(p.rate_cents_per_kwh) !== null) || toChartCents(tariff.usage_rate_cents_per_kwh) !== null
+                const miniChartData = hasRates ? buildHourlyRateData(periods, toChartCents(tariff.usage_rate_cents_per_kwh)) : null
+
+                return (
+                  <button
+                    key={tariffKey}
+                    onClick={() => setSelectedTariffKey(tariffKey)}
+                    className={`w-full text-left rounded-md border p-3 ${
+                      isActive ? 'border-primary-500 bg-primary-50' : 'border-slate-200'
+                    }`}
+                  >
+                    <div className="font-medium text-slate-900">{tariff.tariff_name}</div>
+                    <div className="text-sm text-slate-600">
+                      {tariff.tariff_code} | {tariff.tariff_type.toUpperCase()} | Effective {tariff.effective_from}
                     </div>
-                  )}
-                </button>
-              ))}
+                    <div className="text-sm text-slate-600">
+                      Daily {tariff.daily_supply_charge_cents}c/day
+                      {tariff.usage_rate_cents_per_kwh ? ` | Usage ${tariff.usage_rate_cents_per_kwh}c/kWh` : ''}
+                    </div>
+                    {periods.length > 0 && (
+                      <div className="mt-2 flex gap-3">
+                        <div className="flex-1 flex flex-wrap gap-2">
+                          {periods.map((period, idx) => (
+                            <span key={idx} className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-700">
+                              {period.name}: {period.rate_cents_per_kwh}c/kWh
+                            </span>
+                          ))}
+                        </div>
+                        {miniChartData && (
+                          <div className="w-32 h-16 shrink-0">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <AreaChart data={miniChartData} margin={{ top: 2, right: 2, bottom: 0, left: 0 }}>
+                                <defs>
+                                  <linearGradient id={`ngrad-${tariffKey}`} x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#16a34a" stopOpacity={0.3} />
+                                    <stop offset="100%" stopColor="#16a34a" stopOpacity={0.05} />
+                                  </linearGradient>
+                                </defs>
+                                <Area
+                                  type="stepAfter"
+                                  dataKey="rate"
+                                  stroke="#16a34a"
+                                  strokeWidth={1.5}
+                                  fill={`url(#ngrad-${tariffKey})`}
+                                  isAnimationActive={false}
+                                />
+                              </AreaChart>
+                            </ResponsiveContainer>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </button>
+                )
+              })}
             </div>
           )}
         </div>
@@ -264,21 +294,29 @@ export default function Tariffs() {
         <div className="bg-white rounded-lg border border-slate-200 p-5">
           <h2 className="text-lg font-medium text-slate-900">TOU Section</h2>
           <div className="mt-4 space-y-3">
-            {touDefinitions.map((definition) => (
-              <div key={definition.id} className="rounded-md border border-slate-200 p-3">
-                <div className="font-medium text-slate-900">{definition.name}</div>
-                <div className="text-sm text-slate-600">
-                  TZ {definition.timezone} | Effective {definition.effective_from}
+            {(() => {
+              const seen = new Set<string>()
+              return touDefinitions.filter((d) => {
+                const key = `${d.name}|${d.effective_from}`
+                if (seen.has(key)) return false
+                seen.add(key)
+                return true
+              }).map((definition) => (
+                <div key={definition.id} className="rounded-md border border-slate-200 p-3">
+                  <div className="font-medium text-slate-900">{definition.name}</div>
+                  <div className="text-sm text-slate-600">
+                    TZ {definition.timezone} | Effective {definition.effective_from}
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {definition.periods.map((period) => (
+                      <span key={period.id} className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-700">
+                        {period.name}: {period.start_time}-{period.end_time}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {definition.periods.map((period) => (
-                    <span key={period.id} className="text-xs px-2 py-1 rounded bg-slate-100 text-slate-700">
-                      {period.name}: {period.start_time}-{period.end_time}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))
+            })()}
             {touDefinitions.length === 0 && <p className="text-slate-500">No TOU definition found for this provider.</p>}
           </div>
         </div>

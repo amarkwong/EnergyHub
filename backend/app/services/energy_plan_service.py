@@ -89,6 +89,7 @@ class EnergyPlanService:
         db.commit()
 
         retailer_by_slug: dict[str, Retailer] = {}
+        seen_plan_keys: set[tuple[str, str, str, str]] = set()
         plan_count = 0
         tou_def_count = 0
         tou_period_count = 0
@@ -96,6 +97,17 @@ class EnergyPlanService:
         for item in retail_payload.get("plans", []):
             retailer_name = item["retailer"].strip()
             slug = self._slugify(retailer_name)
+
+            # Derive distributor from geography data
+            distributors = item.get("distributors") or []
+            first_distributor = distributors[0] if distributors else None
+
+            # Skip exact duplicates (same plan_name + tariff_type + distributor for same retailer)
+            plan_key = (slug, item["plan_name"], item["tariff_type"], first_distributor or "")
+            if plan_key in seen_plan_keys:
+                continue
+            seen_plan_keys.add(plan_key)
+
             retailer = retailer_by_slug.get(slug)
             if not retailer:
                 retailer = Retailer(
@@ -107,15 +119,20 @@ class EnergyPlanService:
                 db.flush()
                 retailer_by_slug[slug] = retailer
 
+            feed_in_tariffs = item.get("feed_in_tariffs") or []
+            feed_in_rate = feed_in_tariffs[0]["unit_price_cents_per_kwh"] if feed_in_tariffs else None
+
             plan = EnergyPlan(
                 retailer_id=retailer.id,
                 plan_name=item["plan_name"],
-                network_provider=item.get("network_provider"),
+                network_provider=first_distributor or item.get("network_provider"),
                 tariff_type=item["tariff_type"],
                 effective_from=date.fromisoformat(item["effective_from"]),
                 effective_to=date.fromisoformat(item["effective_to"]) if item.get("effective_to") else None,
                 daily_supply_charge_cents=item["daily_supply_charge_cents"],
                 usage_rate_cents_per_kwh=item.get("usage_rate_cents_per_kwh"),
+                feed_in_tariff_cents_per_kwh=feed_in_rate,
+                feed_in_tariffs_json=json.dumps(feed_in_tariffs) if feed_in_tariffs else None,
                 source_url=item.get("source_url"),
                 is_active=True,
             )
@@ -137,7 +154,8 @@ class EnergyPlanService:
             db.flush()
             tou_def_count += 1
 
-            periods = self._retailer_periods_for_plan(slug, plan.tariff_type, item.get("usage_rate_cents_per_kwh"))
+            catalog_tou_rates = item.get("tou_rates") or []
+            periods = self._retailer_periods_for_plan(slug, plan.tariff_type, item.get("usage_rate_cents_per_kwh"), catalog_tou_rates)
             for idx, period in enumerate(periods):
                 db.add(
                     TouPeriod(
@@ -235,13 +253,17 @@ class EnergyPlanService:
     def _days_to_csv(days: list[int]) -> str:
         return ",".join(str(d) for d in sorted(set(days)))
 
-    def _retailer_periods_for_plan(self, retailer_slug: str, tariff_type: str, usage_rate: Optional[float]) -> list[dict]:
+    def _retailer_periods_for_plan(
+        self, retailer_slug: str, tariff_type: str, usage_rate: Optional[float], catalog_tou_rates: Optional[list[dict]] = None,
+    ) -> list[dict]:
+        # If the catalog carries per-period TOU rates from the CDR API, use them directly
+        if tariff_type == "tou" and catalog_tou_rates:
+            return self._merge_catalog_tou_rates(retailer_slug, catalog_tou_rates)
+
         if tariff_type == "tou":
             return self._attach_rate_defaults(RETAILER_TOU_OVERRIDES.get(retailer_slug, []), usage_rate)
 
-        if retailer_slug in RETAILER_TOU_OVERRIDES and usage_rate is not None:
-            return self._attach_rate_defaults(RETAILER_TOU_OVERRIDES[retailer_slug], usage_rate)
-
+        # Flat tariff plans always get a single "anytime" period
         return [
             {
                 "name": "anytime",
@@ -252,6 +274,33 @@ class EnergyPlanService:
                 "unit": "kWh",
             }
         ]
+
+    def _merge_catalog_tou_rates(self, retailer_slug: str, catalog_tou_rates: list[dict]) -> list[dict]:
+        """Build TOU periods from CDR-sourced tou_rates, falling back to override windows for time/days."""
+        overrides = RETAILER_TOU_OVERRIDES.get(retailer_slug, [])
+        override_by_name = {o["name"]: o for o in overrides}
+
+        periods: list[dict] = []
+        for entry in catalog_tou_rates:
+            name = entry.get("name") or "unknown"
+            rate = entry.get("rate_cents_per_kwh")
+
+            # Use catalog time windows if present, otherwise fall back to retailer overrides
+            override = override_by_name.get(name, {})
+            start_time = entry.get("start_time") or override.get("start_time") or "00:00"
+            end_time = entry.get("end_time") or override.get("end_time") or "23:59"
+            days = entry.get("days") or override.get("days") or [0, 1, 2, 3, 4, 5, 6]
+
+            periods.append({
+                "name": name,
+                "start_time": start_time,
+                "end_time": end_time,
+                "days": days,
+                "rate_cents_per_kwh": rate,
+                "unit": "kWh",
+            })
+
+        return periods if periods else self._attach_rate_defaults(overrides, None)
 
     def _network_periods_for_tariff(self, tariff: dict) -> list[dict]:
         if tariff.get("tariff_type") == "flat":

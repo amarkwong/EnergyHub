@@ -1,6 +1,8 @@
 """Invoice reconciliation endpoints."""
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
+from app.db.database import get_db
 from app.schemas.reconciliation import (
     ReconciliationRequest,
     ReconciliationSummary,
@@ -13,7 +15,7 @@ reconciliation_engine = ReconciliationEngine()
 
 
 @router.post("/run", response_model=ReconciliationSummary)
-async def run_reconciliation(request: ReconciliationRequest):
+async def run_reconciliation(request: ReconciliationRequest, db: Session = Depends(get_db)):
     """
     Run invoice reconciliation.
 
@@ -27,7 +29,8 @@ async def run_reconciliation(request: ReconciliationRequest):
             nem12_file_id=request.nem12_file_id,
             network_tariff_code=request.network_tariff_code,
             retail_plan_name=request.retail_plan_name,
-            tolerance_percent=request.tolerance_percent
+            tolerance_percent=request.tolerance_percent,
+            db=db,
         )
         return result
     except ValueError as e:
@@ -40,18 +43,18 @@ async def run_reconciliation(request: ReconciliationRequest):
 
 
 @router.get("/{reconciliation_id}", response_model=ReconciliationSummary)
-async def get_reconciliation(reconciliation_id: str):
+async def get_reconciliation(reconciliation_id: str, db: Session = Depends(get_db)):
     """Get a specific reconciliation result by ID."""
-    result = await reconciliation_engine.get_reconciliation(reconciliation_id)
+    result = await reconciliation_engine.get_reconciliation(reconciliation_id, db=db)
     if not result:
         raise HTTPException(status_code=404, detail="Reconciliation not found")
     return result
 
 
 @router.get("/history/{nmi}", response_model=list[ReconciliationHistoryItem])
-async def get_reconciliation_history(nmi: str, limit: int = 10):
+async def get_reconciliation_history(nmi: str, limit: int = 10, db: Session = Depends(get_db)):
     """Get reconciliation history for a specific NMI."""
-    history = await reconciliation_engine.get_history(nmi, limit=limit)
+    history = await reconciliation_engine.get_history(nmi, limit=limit, db=db)
     return history
 
 

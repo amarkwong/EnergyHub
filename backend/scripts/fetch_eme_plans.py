@@ -86,6 +86,26 @@ def _request_json(url: str, preferred_version: int, timeout_seconds: float) -> R
     raise RuntimeError(f"Failed to negotiate CDR version for URL: {url}")
 
 
+def _derive_state_from_postcode(postcode: str) -> str | None:
+    """Map Australian postcode prefix to state abbreviation."""
+    if not postcode or not postcode[0].isdigit():
+        return None
+    first = int(postcode[0])
+    mapping = {
+        2: "NSW", 3: "VIC", 4: "QLD", 5: "SA",
+        6: "WA", 7: "TAS", 0: "NT",
+    }
+    # ACT postcodes: 2600-2618, 2900-2920
+    if postcode.startswith(("26", "29")) and first == 2:
+        try:
+            num = int(postcode)
+            if 2600 <= num <= 2618 or 2900 <= num <= 2920:
+                return "ACT"
+        except ValueError:
+            pass
+    return mapping.get(first)
+
+
 def _to_cents(value: Any) -> float | None:
     if value is None:
         return None
@@ -117,12 +137,126 @@ def _pick_first_unit_price_cents(contract: dict[str, Any]) -> float | None:
         tou_rates = period.get("timeOfUseRates")
         if isinstance(tou_rates, list):
             for tou_rate in tou_rates:
-                if isinstance(tou_rate, dict) and "unitPrice" in tou_rate:
+                if not isinstance(tou_rate, dict):
+                    continue
+                # CDR spec: unitPrice is nested inside rates[]
+                nested_rates = tou_rate.get("rates")
+                if isinstance(nested_rates, list):
+                    for rate in nested_rates:
+                        if isinstance(rate, dict) and "unitPrice" in rate:
+                            cents = _to_cents(rate.get("unitPrice"))
+                            if cents is not None:
+                                return cents
+                # Fallback: unitPrice directly on tou_rate (older API versions)
+                if "unitPrice" in tou_rate:
                     cents = _to_cents(tou_rate.get("unitPrice"))
                     if cents is not None:
                         return cents
 
     return None
+
+
+# CDR day names → Python weekday ints (Monday=0)
+# API returns both full names and 3-letter abbreviations
+_CDR_DAY_MAP: dict[str, int] = {
+    "MONDAY": 0, "MON": 0,
+    "TUESDAY": 1, "TUE": 1,
+    "WEDNESDAY": 2, "WED": 2,
+    "THURSDAY": 3, "THU": 3,
+    "FRIDAY": 4, "FRI": 4,
+    "SATURDAY": 5, "SAT": 5,
+    "SUNDAY": 6, "SUN": 6,
+    "PUBLIC_HOLIDAYS": -1,
+}
+
+
+def _extract_tou_rates(contract: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extract per-period TOU rates from CDR contract tariffPeriod.
+
+    Each CDR timeOfUseRate can have multiple timeOfUse windows (e.g. peak
+    covers 06:00-09:59 and 15:00-20:59). We emit one entry per window so
+    the downstream TOU period model can represent them individually.
+    """
+    tariff_periods = contract.get("tariffPeriod")
+    if not isinstance(tariff_periods, list):
+        return []
+
+    results: list[dict[str, Any]] = []
+    for period in tariff_periods:
+        if not isinstance(period, dict):
+            continue
+        tou_rates = period.get("timeOfUseRates")
+        if not isinstance(tou_rates, list):
+            continue
+        for tou_rate in tou_rates:
+            if not isinstance(tou_rate, dict):
+                continue
+
+            # Extract rate (cents) from nested rates[]
+            rate_cents: float | None = None
+            nested_rates = tou_rate.get("rates")
+            if isinstance(nested_rates, list):
+                for rate in nested_rates:
+                    if isinstance(rate, dict) and "unitPrice" in rate:
+                        rate_cents = _to_cents(rate.get("unitPrice"))
+                        if rate_cents is not None:
+                            break
+            if rate_cents is None and "unitPrice" in tou_rate:
+                rate_cents = _to_cents(tou_rate.get("unitPrice"))
+
+            # Normalize type to our naming convention
+            tou_type = (tou_rate.get("type") or "").strip().upper()
+            name = tou_type.lower().replace(" ", "_")
+            if name in ("offpeak",):
+                name = "off_peak"
+
+            # Emit one entry per timeOfUse window (e.g. peak may cover two disjoint windows)
+            time_of_use = tou_rate.get("timeOfUse")
+            if isinstance(time_of_use, list) and time_of_use:
+                for window in time_of_use:
+                    if not isinstance(window, dict):
+                        continue
+                    start_time = str(window.get("startTime") or "")[:5] or None
+                    end_time = str(window.get("endTime") or "")[:5] or None
+                    days: list[int] = []
+                    for day_name in (window.get("days") or []):
+                        day_int = _CDR_DAY_MAP.get(str(day_name).upper(), -1)
+                        if day_int >= 0 and day_int not in days:
+                            days.append(day_int)
+                    results.append({
+                        "name": name or "unknown",
+                        "rate_cents_per_kwh": rate_cents,
+                        "start_time": start_time,
+                        "end_time": end_time,
+                        "days": sorted(days) if days else None,
+                    })
+            else:
+                # No time windows — emit rate without time info
+                results.append({
+                    "name": name or "unknown",
+                    "rate_cents_per_kwh": rate_cents,
+                    "start_time": None,
+                    "end_time": None,
+                    "days": None,
+                })
+
+    # Deduplicate: CDR contracts have multiple tariffPeriod blocks (general
+    # usage, controlled load, demand) that repeat the same TOU windows.
+    seen: set[tuple] = set()
+    deduped: list[dict[str, Any]] = []
+    for entry in results:
+        key = (
+            entry.get("name"),
+            entry.get("rate_cents_per_kwh"),
+            entry.get("start_time"),
+            entry.get("end_time"),
+            tuple(entry["days"]) if entry.get("days") else None,
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(entry)
+    return deduped
 
 
 def _extract_daily_supply_cents(contract: dict[str, Any]) -> float | None:
@@ -292,6 +426,23 @@ def _normalize_plan_summary(
         elif "SINGLE" in normalized:
             tariff_type = "flat"
 
+    # Extract geography from plan summary (CDR list endpoint provides this)
+    geography = plan_summary.get("geography") or {}
+    distributors: list[str] = []
+    if isinstance(geography.get("distributors"), list):
+        for d in geography["distributors"]:
+            name = d if isinstance(d, str) else (d.get("displayName") or d.get("name") or "") if isinstance(d, dict) else ""
+            if name and name not in distributors:
+                distributors.append(name)
+    included_postcodes: list[str] = []
+    if isinstance(geography.get("includedPostcodes"), list):
+        included_postcodes = [str(p) for p in geography["includedPostcodes"] if p]
+
+    # Derive state from first postcode if available
+    state: str | None = None
+    if included_postcodes:
+        state = _derive_state_from_postcode(included_postcodes[0])
+
     return {
         "retailer": plan_summary.get("brandName") or plan_detail.get("brandName") or retailer_slug,
         "retailer_slug": retailer_slug,
@@ -302,9 +453,13 @@ def _normalize_plan_summary(
         "effective_from": effective_date,
         "daily_supply_charge_cents": _extract_daily_supply_cents(contract),
         "usage_rate_cents_per_kwh": _pick_first_unit_price_cents(contract),
+        "tou_rates": _extract_tou_rates(contract),
         "feed_in_tariffs": _extract_feed_in_tariffs(contract),
         "tariff_type": tariff_type,
         "source_url": detail_url,
+        "distributors": distributors,
+        "included_postcodes": included_postcodes,
+        "state": state,
     }
 
 
@@ -354,7 +509,7 @@ def fetch_retailer_plans(
                 continue
 
             normalized.append(_normalize_plan_summary(retailer_slug, plan, detail_data, detail_url))
-            if len(normalized) >= max_plans:
+            if max_plans > 0 and len(normalized) >= max_plans:
                 return normalized, {"pages_fetched": pages_fetched, "detail_calls": detail_calls}
 
         meta = list_result.payload.get("meta", {})
