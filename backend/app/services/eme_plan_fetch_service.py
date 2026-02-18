@@ -7,6 +7,7 @@ from html import unescape
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib import request as urllib_request
 
 from scripts.fetch_eme_plans import DEFAULT_BASE_URL, fetch_retailer_plans
 from app.services.energy_expert_service import EnergyExpertService
@@ -186,6 +187,124 @@ class EmePlanFetchService:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         return payload
+
+    def fetch_from_registry(
+        self,
+        *,
+        registry_url: str,
+        output_path: Path = DEFAULT_EME_OUTPUT_PATH,
+        page_size: int = 20,
+        max_plans: int = 0,
+        fuel_type: str = "ELECTRICITY",
+        timeout_seconds: float = 30.0,
+    ) -> dict[str, Any]:
+        """Fetch plans for all CDR-registered retailers discovered from the jxeeno registry."""
+        registry_entries = self._download_registry(registry_url, timeout_seconds)
+
+        payload: dict[str, Any] = {
+            "metadata": {
+                "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                "source": "AER CDR Energy Product Reference Data API",
+                "registry_url": registry_url,
+                "fuel_type": fuel_type,
+                "schedule": {
+                    "cadence": "semiannual",
+                    "months_interval": 6,
+                    "eventbridge_cron": SEMIANNUAL_EVENTBRIDGE_CRON,
+                    "next_recommended_run_utc": self.next_semiannual_run_utc().isoformat(),
+                },
+                "retailers_discovered": len(registry_entries),
+            },
+            "plans": [],
+            "stats": {},
+            "resolved_retailers": [],
+            "unresolved_retailers": [],
+        }
+
+        seen_plan_keys: set[tuple] = set()
+        fetched_slugs: set[str] = set()
+        for entry in registry_entries:
+            brand_name = entry["brand_name"]
+            slug = entry["slug"]
+
+            if slug in fetched_slugs:
+                payload["resolved_retailers"].append(
+                    {"retailer_name": brand_name, "retailer_slug": slug}
+                )
+                continue
+
+            try:
+                plans, stats = fetch_retailer_plans(
+                    base_url=DEFAULT_BASE_URL,
+                    retailer_slug=slug,
+                    page_size=page_size,
+                    max_plans=max_plans,
+                    fuel_type=fuel_type,
+                    timeout_seconds=timeout_seconds,
+                )
+                unique_plans: list[dict[str, Any]] = []
+                for plan in plans:
+                    key = self._plan_dedup_key(plan)
+                    if key in seen_plan_keys:
+                        continue
+                    seen_plan_keys.add(key)
+                    plan["retailer_display_name"] = brand_name
+                    unique_plans.append(plan)
+                payload["plans"].extend(unique_plans)
+                payload["stats"][slug] = {
+                    **stats,
+                    "retailer_name": brand_name,
+                    "plans_normalized": len(plans),
+                    "plans_written": len(unique_plans),
+                }
+                fetched_slugs.add(slug)
+                payload["resolved_retailers"].append(
+                    {"retailer_name": brand_name, "retailer_slug": slug}
+                )
+            except Exception as exc:
+                payload["unresolved_retailers"].append(
+                    {
+                        "retailer_name": brand_name,
+                        "slug_candidates": [slug],
+                        "errors": [f"{slug}: {exc}"],
+                    }
+                )
+
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        return payload
+
+    @staticmethod
+    def _download_registry(registry_url: str, timeout_seconds: float) -> list[dict[str, str]]:
+        """Download the jxeeno CDR registry JSON and return energy retailer entries."""
+        req = urllib_request.Request(registry_url, headers={"Accept": "application/json"})
+        with urllib_request.urlopen(req, timeout=timeout_seconds) as resp:
+            raw = json.loads(resp.read().decode("utf-8"))
+
+        # Registry shape is {"data": [...]}}
+        items = raw.get("data", []) if isinstance(raw, dict) else raw
+
+        entries: list[dict[str, str]] = []
+        for item in items:
+            # Filter to energy data holders
+            industries = item.get("industries") or []
+            if not any("energy" in ind.lower() for ind in industries):
+                continue
+
+            base_uri = item.get("productReferenceDataBaseUri") or ""
+            # Extract slug from URI like https://cdr.energymadeeasy.gov.au/<slug>
+            slug = base_uri.rstrip("/").rsplit("/", 1)[-1] if base_uri else ""
+            if not slug:
+                continue
+
+            brand_name = item.get("brandName") or slug
+            entries.append({
+                "brand_name": brand_name,
+                "slug": slug,
+                "base_uri": base_uri,
+            })
+
+        return entries
 
     def build_retail_catalog_payload(self, eme_payload: dict[str, Any]) -> tuple[dict[str, Any], dict[str, int]]:
         today_iso = date.today().isoformat()

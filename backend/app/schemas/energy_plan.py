@@ -106,6 +106,20 @@ class EmeFetchAllRetailersRequest(BaseModel):
     refresh_network_tariffs: bool = False
 
 
+CDR_REGISTRY_URL = "https://jxeeno.github.io/energy-cdr-prd-endpoints/energy-prd-endpoints.json"
+
+
+class EmeFetchRegistryRequest(BaseModel):
+    registry_url: str = Field(CDR_REGISTRY_URL, description="URL of the jxeeno CDR endpoint registry JSON")
+    page_size: int = Field(20, ge=1, le=100)
+    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
+    fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
+    timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
+    persist_to_retail_catalog: bool = True
+    refresh_db_after_persist: bool = True
+    refresh_network_tariffs: bool = False
+
+
 class EmeFetchAllRetailersResponse(BaseModel):
     output_file: str
     retailers_discovered: int

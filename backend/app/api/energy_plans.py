@@ -14,6 +14,7 @@ from app.models.energy_plan import EnergyPlan, TouDefinition
 from app.schemas.energy_plan import (
     EmeFetchAllRetailersRequest,
     EmeFetchAllRetailersResponse,
+    EmeFetchRegistryRequest,
     EmeFetchRequest,
     EmeFetchResponse,
     EnergyPlanOut,
@@ -182,6 +183,66 @@ def fetch_eme_all_retailers(
         )
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Failed to fetch all EME retailers: {exc}") from exc
+
+
+@router.post("/fetch-eme-registry", response_model=EmeFetchAllRetailersResponse)
+def fetch_eme_registry(
+    payload: EmeFetchRegistryRequest,
+    db: Session = Depends(get_db),
+):
+    """Fetch EME plans for all CDR-registered retailers from the jxeeno registry."""
+    try:
+        init_db()
+        eme_payload = eme_fetch_service.fetch_from_registry(
+            registry_url=payload.registry_url,
+            output_path=Path(DEFAULT_EME_OUTPUT_PATH),
+            page_size=payload.page_size,
+            max_plans=payload.max_plans_per_retailer,
+            fuel_type=payload.fuel_type,
+            timeout_seconds=payload.timeout_seconds,
+        )
+
+        catalog_stats = None
+        db_refresh = None
+        network_log_lines = None
+        network_refreshed = False
+        persisted = False
+        if payload.persist_to_retail_catalog:
+            catalog_stats = eme_fetch_service.persist_retail_catalog(
+                eme_payload=eme_payload,
+                retail_catalog_path=Path(DEFAULT_RETAIL_CATALOG_PATH),
+            )
+            persisted = True
+            if payload.refresh_db_after_persist:
+                refresh_result = service.refresh_catalogs(db)
+                db_refresh = EnergyPlanRefreshResponse(**refresh_result)
+        if payload.refresh_network_tariffs:
+            network_log_lines = _refresh_network_tariffs_catalog()
+            network_refreshed = True
+
+        resolved = eme_payload.get("resolved_retailers", [])
+        unresolved = eme_payload.get("unresolved_retailers", [])
+        return EmeFetchAllRetailersResponse(
+            output_file=str(DEFAULT_EME_OUTPUT_PATH),
+            retailers_discovered=int(eme_payload.get("metadata", {}).get("retailers_discovered", 0)),
+            retailers_resolved=len(resolved),
+            retailers_unresolved=len(unresolved),
+            resolved_retailers=resolved,
+            unresolved_retailers=unresolved,
+            plans_fetched=len(eme_payload.get("plans", [])),
+            stats=eme_payload.get("stats", {}),
+            retail_catalog_persisted=persisted,
+            retail_catalog_file=str(DEFAULT_RETAIL_CATALOG_PATH) if persisted else None,
+            retail_catalog_stats=catalog_stats,
+            db_refresh=db_refresh,
+            cadence_months=6,
+            recommended_eventbridge_cron=SEMIANNUAL_EVENTBRIDGE_CRON,
+            next_recommended_run_utc=eme_fetch_service.next_semiannual_run_utc().isoformat(),
+            network_tariffs_refreshed=network_refreshed,
+            network_tariff_log_lines=network_log_lines,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch from CDR registry: {exc}") from exc
 
 
 @router.get("/retailers", response_model=list[RetailerOut])
