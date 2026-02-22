@@ -10,7 +10,6 @@ import Reconciliation from './pages/Reconciliation'
 import Tariffs from './pages/Tariffs'
 import Retailers from './pages/Retailers'
 import Emulator from './pages/Emulator'
-import Summary from './pages/Summary'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Onboarding from './pages/Onboarding'
@@ -53,7 +52,6 @@ function App() {
             <Route path="tariffs" element={<Tariffs />} />
             <Route path="retailers" element={<Retailers />} />
             <Route path="emulator" element={<Emulator />} />
-            <Route path="summary" element={<Summary />} />
           </Route>
         </Route>
       </Route>

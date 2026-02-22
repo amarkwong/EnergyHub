@@ -1,21 +1,17 @@
 """Plan emulator: compare all retail plans against actual meter data."""
 from __future__ import annotations
 
-import json
 from datetime import date, datetime, time
 from decimal import Decimal, ROUND_HALF_UP
-from pathlib import Path
 from typing import Optional
 
 from app.db.database import SessionLocal
 from app.models.invoice import Invoice
 from app.models.meter_data import MeterDataInterval
+from app.services.catalog_service import get_catalog
 from app.services.energy_expert_service import EnergyExpertService
-from app.services.energy_plan_service import RETAILER_TOU_OVERRIDES
 
 MONEY_QUANT = Decimal("0.01")
-ROOT = Path(__file__).resolve().parents[1]
-RETAIL_PLANS_PATH = ROOT / "data" / "retail_plans.json"
 
 
 def _slugify(name: str) -> str:
@@ -46,50 +42,14 @@ def _is_within_period(hour: int, start: int, end: int) -> bool:
 class EmulatorService:
     """Compare all retail plans against actual interval meter data."""
 
-    def __init__(self):
-        self._plans_cache: Optional[list[dict]] = None
-        self._postcode_index: Optional[dict[str, list[int]]] = None
-
     def _load_plan_catalog(self) -> list[dict]:
-        if self._plans_cache is not None:
-            return self._plans_cache
-        payload = json.loads(RETAIL_PLANS_PATH.read_text(encoding="utf-8"))
-        self._plans_cache = payload.get("plans", [])
-        self._postcode_index = self._build_postcode_index(self._plans_cache)
-        return self._plans_cache
-
-    @staticmethod
-    def _build_postcode_index(plans: list[dict]) -> dict[str, list[int]]:
-        """Build reverse index: postcode -> list of plan indices for O(1) lookup."""
-        index: dict[str, list[int]] = {}
-        for idx, plan in enumerate(plans):
-            for pc in plan.get("included_postcodes") or []:
-                index.setdefault(str(pc), []).append(idx)
-        return index
+        return get_catalog().get_all_plans()
 
     def _filter_plans_by_postcode(self, catalog: list[dict], postcode: Optional[str]) -> list[dict]:
-        """Keep only plans whose included_postcodes contains the user's postcode.
-
-        Plans with no postcodes pass through for backward compatibility.
-        If postcode is None, all plans are returned.
-        """
+        """Use catalog's postcode index for O(1) lookup."""
         if not postcode:
             return catalog
-
-        # Use index if available and matches the full catalog
-        if self._postcode_index is not None and catalog is self._plans_cache:
-            matching_indices = set(self._postcode_index.get(postcode, []))
-            result = []
-            for idx, plan in enumerate(catalog):
-                if idx in matching_indices or not plan.get("included_postcodes"):
-                    result.append(plan)
-            return result
-
-        # Fallback: linear scan
-        return [
-            plan for plan in catalog
-            if not plan.get("included_postcodes") or postcode in plan["included_postcodes"]
-        ]
+        return get_catalog().get_plans_for_postcode(postcode)
 
     async def compare_plans(
         self,
@@ -115,11 +75,14 @@ class EmulatorService:
         total_export_kwh = sum(iv["value"] for iv in export_intervals)
 
         # 3. Load plan catalog, filter by postcode and retailer
-        catalog = self._load_plan_catalog()
-        catalog = self._filter_plans_by_postcode(catalog, postcode)
+        if postcode:
+            catalog = self._filter_plans_by_postcode([], postcode)
+        else:
+            catalog = self._load_plan_catalog()
+
         if retailer_filter:
             filter_set = {s.lower() for s in retailer_filter}
-            catalog = [p for p in catalog if p.get("retailer_slug", _slugify(p["retailer"])) in filter_set]
+            catalog = [p for p in catalog if p.get("retailer_slug", _slugify(p.get("retailer", ""))) in filter_set]
 
         plan_results: list[dict] = []
         for plan in catalog:
@@ -270,7 +233,7 @@ class EmulatorService:
         total_import_kwh: float,
         total_export_kwh: float,
     ) -> dict:
-        retailer_slug = plan.get("retailer_slug", _slugify(plan["retailer"]))
+        retailer_slug = plan.get("retailer_slug", _slugify(plan.get("retailer", "")))
 
         # Supply charge
         daily_supply_cents = Decimal(str(plan.get("daily_supply_charge_cents", 0)))
@@ -285,16 +248,6 @@ class EmulatorService:
             usage_charge, period_breakdown = self._compute_tou_usage(
                 import_intervals, tou_rates, usage_rate
             )
-        elif tariff_type == "tou" and not tou_rates:
-            # Fallback to retailer overrides
-            overrides = RETAILER_TOU_OVERRIDES.get(retailer_slug, [])
-            if overrides and usage_rate is not None:
-                synthetic_rates = self._build_synthetic_tou_rates(overrides, float(usage_rate))
-                usage_charge, period_breakdown = self._compute_tou_usage(
-                    import_intervals, synthetic_rates, usage_rate
-                )
-            else:
-                usage_charge, period_breakdown = self._compute_flat_usage(total_import_kwh, usage_rate)
         else:
             usage_charge, period_breakdown = self._compute_flat_usage(total_import_kwh, usage_rate)
 
@@ -313,9 +266,9 @@ class EmulatorService:
 
         distributors = plan.get("distributors") or []
         return {
-            "retailer": plan["retailer"],
+            "retailer": plan.get("retailer", retailer_slug),
             "retailer_slug": retailer_slug,
-            "plan_name": plan["plan_name"],
+            "plan_name": plan.get("plan_name", ""),
             "tariff_type": tariff_type,
             "distributor": distributors[0] if distributors else None,
             "state": plan.get("state"),
@@ -401,28 +354,6 @@ class EmulatorService:
         return cost, breakdown
 
     @staticmethod
-    def _build_synthetic_tou_rates(overrides: list[dict], base_rate: float) -> list[dict]:
-        """Build TOU rates from retailer overrides with estimated per-period rates."""
-        rates = []
-        for o in overrides:
-            name = o["name"]
-            multiplier = 1.0
-            if name == "peak":
-                multiplier = 1.20
-            elif name == "shoulder":
-                multiplier = 1.0
-            elif name == "off_peak":
-                multiplier = 0.80
-            rates.append({
-                "name": name,
-                "start_time": o["start_time"],
-                "end_time": o["end_time"],
-                "days": o["days"],
-                "rate_cents_per_kwh": round(base_rate * multiplier, 4),
-            })
-        return rates
-
-    @staticmethod
     def _compute_feed_in(
         total_export_kwh: float,
         billing_days: int,
@@ -431,8 +362,7 @@ class EmulatorService:
         if total_export_kwh <= 0 or not feed_in_tariffs:
             return Decimal("0"), None
 
-        # Filter out legacy government FiT schemes (44c/48c) that are
-        # grandfathered and unavailable to new/switching customers.
+        # Filter out legacy government FiT schemes
         retailer_fits = EnergyExpertService.filter_retail_feed_in_tariffs(feed_in_tariffs)
         if not retailer_fits:
             return Decimal("0"), None

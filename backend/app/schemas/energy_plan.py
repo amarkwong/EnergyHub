@@ -1,4 +1,4 @@
-"""Schemas for energy plans and TOU alignment."""
+"""Schemas for energy plans, catalog, and TOU alignment."""
 from __future__ import annotations
 
 from datetime import date, time
@@ -8,11 +8,72 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+# ---------------------------------------------------------------------------
+# Catalog-backed schemas (new)
+# ---------------------------------------------------------------------------
+
+class CatalogRetailerOut(BaseModel):
+    slug: str
+    name: str
+    states: list[str] = []
+
+
+class CatalogTouRateOut(BaseModel):
+    name: str
+    rate_cents_per_kwh: Optional[float] = None
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
+    days: Optional[list[int]] = None
+
+
+class CatalogFeedInTariffOut(BaseModel):
+    unit_price_cents_per_kwh: Optional[float] = None
+    name: Optional[str] = None
+    type: Optional[str] = None
+    period_name: Optional[str] = None
+    time_from: Optional[str] = None
+    time_to: Optional[str] = None
+    tier_min_kwh: Optional[float] = None
+    tier_max_kwh: Optional[float] = None
+    tier_inferred: Optional[bool] = None
+
+
+class CatalogPlanOut(BaseModel):
+    idx: int
+    retailer_slug: str
+    retailer: str
+    plan_name: str
+    tariff_type: str
+    customer_type: Optional[str] = None
+    effective_from: Optional[str] = None
+    daily_supply_charge_cents: Optional[float] = None
+    usage_rate_cents_per_kwh: Optional[float] = None
+    tou_rates: list[CatalogTouRateOut] = []
+    feed_in_tariffs: list[CatalogFeedInTariffOut] = []
+    distributors: list[str] = []
+    state: Optional[str] = None
+    plan_ids: list[str] = []
+    source_url: Optional[str] = None
+
+
+class CatalogStatusOut(BaseModel):
+    version: Optional[int] = None
+    generated_at_utc: Optional[str] = None
+    retailer_count: int = 0
+    plan_count: int = 0
+    postcode_count: int = 0
+
+
+# ---------------------------------------------------------------------------
+# Legacy DB-backed schemas (kept for tou/tariffs routers)
+# ---------------------------------------------------------------------------
+
 class RetailerOut(BaseModel):
     id: int
     name: str
     slug: str
     source_url: Optional[str] = None
+    states: list[str] = []
 
 
 class EnergyPlanOut(BaseModel):
@@ -64,81 +125,9 @@ class EnergyPlanRefreshResponse(BaseModel):
     tou_periods: int
 
 
-class EmeFetchRequest(BaseModel):
-    retailers: list[str] = Field(default_factory=lambda: ["agl", "origin", "energyaustralia"])
-    page_size: int = Field(20, ge=1, le=100)
-    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
-    fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
-    timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
-    persist_to_retail_catalog: bool = True
-    refresh_db_after_persist: bool = True
-    refresh_network_tariffs: bool = False
-
-
-class EmeFetchResponse(BaseModel):
-    output_file: str
-    plans_fetched: int
-    retailers_requested: int
-    stats: dict[str, dict]
-    retail_catalog_persisted: bool
-    retail_catalog_file: Optional[str] = None
-    retail_catalog_stats: Optional[dict[str, int]] = None
-    db_refresh: Optional[EnergyPlanRefreshResponse] = None
-    cadence_months: int = 6
-    recommended_eventbridge_cron: str
-    next_recommended_run_utc: str
-    network_tariffs_refreshed: bool = False
-    network_tariff_log_lines: Optional[int] = None
-
-
-class EmeFetchAllRetailersRequest(BaseModel):
-    dropdown_html: str = Field(..., min_length=50, description="Retailer dropdown HTML from Energy Made Easy")
-    source_url: str = Field(
-        "https://www.energymadeeasy.gov.au/plans/electricity/current-energy-company",
-        description="Source page URL for retailer dropdown",
-    )
-    page_size: int = Field(20, ge=1, le=100)
-    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
-    fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
-    timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
-    persist_to_retail_catalog: bool = True
-    refresh_db_after_persist: bool = True
-    refresh_network_tariffs: bool = False
-
-
-CDR_REGISTRY_URL = "https://jxeeno.github.io/energy-cdr-prd-endpoints/energy-prd-endpoints.json"
-
-
-class EmeFetchRegistryRequest(BaseModel):
-    registry_url: str = Field(CDR_REGISTRY_URL, description="URL of the jxeeno CDR endpoint registry JSON")
-    page_size: int = Field(20, ge=1, le=100)
-    max_plans_per_retailer: int = Field(0, ge=0, le=10000)
-    fuel_type: str = Field("ELECTRICITY", pattern="^(ALL|ELECTRICITY|GAS)$")
-    timeout_seconds: float = Field(30.0, ge=1.0, le=120.0)
-    persist_to_retail_catalog: bool = True
-    refresh_db_after_persist: bool = True
-    refresh_network_tariffs: bool = False
-
-
-class EmeFetchAllRetailersResponse(BaseModel):
-    output_file: str
-    retailers_discovered: int
-    retailers_resolved: int
-    retailers_unresolved: int
-    resolved_retailers: list[dict[str, str]]
-    unresolved_retailers: list[dict]
-    plans_fetched: int
-    stats: dict[str, dict]
-    retail_catalog_persisted: bool
-    retail_catalog_file: Optional[str] = None
-    retail_catalog_stats: Optional[dict[str, int]] = None
-    db_refresh: Optional[EnergyPlanRefreshResponse] = None
-    cadence_months: int = 6
-    recommended_eventbridge_cron: str
-    next_recommended_run_utc: str
-    network_tariffs_refreshed: bool = False
-    network_tariff_log_lines: Optional[int] = None
-
+# ---------------------------------------------------------------------------
+# TOU Alignment schemas (used by tou router)
+# ---------------------------------------------------------------------------
 
 class TouAlignInput(BaseModel):
     interval_date: date

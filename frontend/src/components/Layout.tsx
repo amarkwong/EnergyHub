@@ -10,7 +10,6 @@ const residentialNavigation = [
   { name: 'My Usage', href: '/consumption' },
   { name: 'Bill Check', href: '/reconciliation' },
   { name: 'Emulator', href: '/emulator' },
-  { name: 'Summary', href: '/summary' },
   { name: 'Network', href: '/network' },
   { name: 'Retailers', href: '/retailers' },
 ]
@@ -21,7 +20,6 @@ const businessNavigation = [
   { name: 'Meter Portfolio', href: '/consumption' },
   { name: 'Invoice Audit', href: '/reconciliation' },
   { name: 'Emulator', href: '/emulator' },
-  { name: 'Summary', href: '/summary' },
   { name: 'Network Charges', href: '/network' },
   { name: 'Retail Contracts', href: '/retailers' },
 ]

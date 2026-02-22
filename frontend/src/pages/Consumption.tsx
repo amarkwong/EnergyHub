@@ -27,9 +27,8 @@ type IntervalRow = {
   quality_flag?: string
 }
 
-function intervalToHour(interval: number, intervalLengthMinutes: number) {
-  const minutes = (interval - 1) * intervalLengthMinutes
-  return Math.max(0, Math.min(23, Math.floor(minutes / 60)))
+function intervalToSlotMinutes(interval: number, intervalLengthMinutes: number) {
+  return (interval - 1) * intervalLengthMinutes
 }
 
 function isSolarExport(row: IntervalRow) {
@@ -113,26 +112,34 @@ export default function Consumption() {
   }, [filteredIntervals])
 
   const hourlyData = useMemo(() => {
-    const byHour = Array.from({ length: 24 }, (_, hour) => ({
-      hour: `${String(hour).padStart(2, '0')}:00`,
-      importTotal: 0,
-      importCount: 0,
-      solarTotal: 0,
-      solarCount: 0,
-    }))
+    const intervalLength = filteredIntervals[0]?.interval_length_minutes ?? 30
+    const slotsPerDay = Math.floor(1440 / intervalLength)
+    const bySlot = Array.from({ length: slotsPerDay }, (_, i) => {
+      const mins = i * intervalLength
+      const hh = String(Math.floor(mins / 60)).padStart(2, '0')
+      const mm = String(mins % 60).padStart(2, '0')
+      return {
+        time: `${hh}:${mm}`,
+        importTotal: 0,
+        importCount: 0,
+        solarTotal: 0,
+        solarCount: 0,
+      }
+    })
     for (const row of filteredIntervals) {
-      const intervalLength = row.interval_length_minutes ?? 30
-      const hour = intervalToHour(row.interval, intervalLength)
+      const rowLen = row.interval_length_minutes ?? 30
+      const minutes = intervalToSlotMinutes(row.interval, rowLen)
+      const slotIndex = Math.min(Math.floor(minutes / intervalLength), slotsPerDay - 1)
       if (isSolarExport(row)) {
-        byHour[hour].solarTotal += row.value
-        byHour[hour].solarCount += 1
+        bySlot[slotIndex].solarTotal += row.value
+        bySlot[slotIndex].solarCount += 1
       } else {
-        byHour[hour].importTotal += row.value
-        byHour[hour].importCount += 1
+        bySlot[slotIndex].importTotal += row.value
+        bySlot[slotIndex].importCount += 1
       }
     }
-    return byHour.map((item) => ({
-      hour: item.hour,
+    return bySlot.map((item) => ({
+      time: item.time,
       consumption: item.importCount > 0 ? item.importTotal / item.importCount : 0,
       solarExport: item.solarCount > 0 ? -(item.solarTotal / item.solarCount) : 0,
     }))
@@ -148,9 +155,6 @@ export default function Consumption() {
       </div>
 
       <div className="bg-white rounded-lg border border-slate-200 p-4 flex flex-wrap items-center gap-3">
-        <div className="text-sm text-slate-600">
-          Latest file: <span className="font-mono text-slate-800">{fileId || 'Not uploaded yet'}</span>
-        </div>
         <div className="flex items-center gap-2">
           <label className="text-sm text-slate-600" htmlFor="nmi-select">NMI</label>
           <select
@@ -247,12 +251,15 @@ export default function Consumption() {
                 ) : (
                   <LineChart data={hourlyData}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="hour" />
+                    <XAxis
+                      dataKey="time"
+                      interval={Math.max(0, Math.floor(hourlyData.length / 12) - 1)}
+                    />
                     <YAxis unit=" kWh" />
                     <Tooltip />
                     <Legend />
                     <Line
-                      type="stepAfter"
+                      type="monotone"
                       dataKey="consumption"
                       name="Average general usage"
                       stroke="#0ea5e9"
@@ -260,7 +267,7 @@ export default function Consumption() {
                       dot={false}
                     />
                     <Line
-                      type="stepAfter"
+                      type="monotone"
                       dataKey="solarExport"
                       name="Average solar export"
                       stroke="#f59e0b"

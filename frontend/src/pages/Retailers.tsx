@@ -1,14 +1,13 @@
 import { useMemo, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { api } from '../api/client'
 import EntityLogo from '../components/EntityLogo'
 
 type Retailer = {
-  id: number
-  name: string
   slug: string
-  source_url?: string | null
+  name: string
+  states?: string[]
 }
 
 type FeedInTariffEntry = {
@@ -18,42 +17,35 @@ type FeedInTariffEntry = {
   tier_max_kwh?: number | null
 }
 
+type TouRate = {
+  name: string
+  rate_cents_per_kwh?: number | null
+  start_time?: string | null
+  end_time?: string | null
+  days?: number[] | null
+}
+
 type EnergyPlan = {
-  id: number
-  retailer: string
+  idx: number
   retailer_slug: string
+  retailer: string
   plan_name: string
-  network_provider?: string | null
   tariff_type: string
-  effective_from: string
-  daily_supply_charge_cents: number | string
-  usage_rate_cents_per_kwh?: number | string | null
-  feed_in_tariff_cents_per_kwh?: number | string | null
+  customer_type?: string | null
+  effective_from?: string | null
+  daily_supply_charge_cents: number
+  usage_rate_cents_per_kwh?: number | null
+  tou_rates: TouRate[]
   feed_in_tariffs?: FeedInTariffEntry[]
+  distributors?: string[]
+  state?: string | null
+  source_url?: string | null
 }
 
-type TouPeriod = {
-  id: number
-  name: string
-  start_time: string
-  end_time: string
-  days_of_week: number[]
-  rate_cents_per_kwh?: number | string | null
-}
-
-type TouDefinition = {
-  id: number
-  plan_id?: number | null
-  name: string
-  timezone: string
-  effective_from: string
-  periods: TouPeriod[]
-}
-
-type YearHistory = {
-  year: number
-  plans: EnergyPlan[]
-  tou_definitions: TouDefinition[]
+type CatalogStatus = {
+  generated_at_utc?: string | null
+  retailer_count: number
+  plan_count: number
 }
 
 type HourlyDataPoint = {
@@ -103,11 +95,11 @@ function num(v: number | string | null | undefined): number | null {
 }
 
 function buildHourlyRateData(
-  periods: TouPeriod[],
+  rates: TouRate[],
   flatRate: number | string | null,
   feedInTariffs?: FeedInTariffEntry[],
 ): HourlyDataPoint[] {
-  const sorted = [...periods].sort((a, b) => a.name.localeCompare(b.name))
+  const sorted = [...rates].sort((a, b) => a.name.localeCompare(b.name))
   const baseFlatRate = num(flatRate) ?? 0
 
   // Deduplicate feed-in tariffs: keep retailer FiT entries, skip legacy government schemes
@@ -121,10 +113,11 @@ function buildHourlyRateData(
   const output: HourlyDataPoint[] = []
   for (let hour = 0; hour < 24; hour += 1) {
     let rate = baseFlatRate
-    for (const period of sorted) {
-      const start = toStartHour(period.start_time)
-      const end = toEndHour(period.end_time)
-      const periodRate = num(period.rate_cents_per_kwh)
+    for (const r of sorted) {
+      if (!r.start_time || !r.end_time) continue
+      const start = toStartHour(r.start_time)
+      const end = toEndHour(r.end_time)
+      const periodRate = num(r.rate_cents_per_kwh)
       if (isWithinPeriod(hour, start, end) && periodRate != null) {
         rate = periodRate
         break
@@ -147,21 +140,28 @@ function feedInLabel(entry: FeedInTariffEntry): string {
   return label
 }
 
-export default function Retailers() {
-  const queryClient = useQueryClient()
-  const [selectedRetailer, setSelectedRetailer] = useState<string | null>(null)
-  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null)
+/** Derive a summary feed-in rate from the tariff list (first non-legacy entry). */
+function primaryFeedInRate(tariffs?: FeedInTariffEntry[]): number | null {
+  if (!tariffs) return null
+  for (const f of tariffs) {
+    const name = (f.name ?? '').toLowerCase()
+    if (name.includes('solar bonus') || name.includes('premium fit')) continue
+    const rate = num(f.unit_price_cents_per_kwh)
+    if (rate != null) return rate
+  }
+  return null
+}
 
-  const refreshMutation = useMutation({
-    mutationFn: async () => {
-      const response = await api.post('/api/energy-plans/refresh')
-      return response.data
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['retailers'] })
-      queryClient.invalidateQueries({ queryKey: ['retailer-plans'] })
-      queryClient.invalidateQueries({ queryKey: ['retailer-tou'] })
-      queryClient.invalidateQueries({ queryKey: ['retailer-history'] })
+export default function Retailers() {
+  const [selectedRetailer, setSelectedRetailer] = useState<string | null>(null)
+  const [selectedPlanIdx, setSelectedPlanIdx] = useState<number | null>(null)
+  const [selectedState, setSelectedState] = useState<string | null>(null)
+
+  const { data: catalogStatus } = useQuery({
+    queryKey: ['catalog-status'],
+    queryFn: async () => {
+      const response = await api.get('/api/energy-plans/status')
+      return response.data as CatalogStatus
     },
   })
 
@@ -173,10 +173,26 @@ export default function Retailers() {
     },
   })
 
+  const states = useMemo(() => {
+    const all = new Set<string>()
+    for (const r of retailers) {
+      for (const s of r.states ?? []) all.add(s)
+    }
+    return [...all].sort()
+  }, [retailers])
+
+  const filteredRetailers = useMemo(() => {
+    if (!selectedState) return retailers
+    return retailers.filter((r) => r.states?.includes(selectedState))
+  }, [retailers, selectedState])
+
   const activeRetailer = useMemo(() => {
-    if (selectedRetailer) return selectedRetailer
-    return retailers[0]?.slug ?? null
-  }, [selectedRetailer, retailers])
+    if (selectedRetailer) {
+      const inFiltered = filteredRetailers.some((r) => r.slug === selectedRetailer)
+      if (inFiltered) return selectedRetailer
+    }
+    return filteredRetailers[0]?.slug ?? null
+  }, [selectedRetailer, filteredRetailers])
 
   const { data: plans = [], isLoading: plansLoading } = useQuery({
     queryKey: ['retailer-plans', activeRetailer],
@@ -189,49 +205,29 @@ export default function Retailers() {
     enabled: !!activeRetailer,
   })
 
-  const activePlanId = useMemo(() => selectedPlanId ?? plans[0]?.id ?? null, [selectedPlanId, plans])
+  const activePlanIdx = useMemo(() => selectedPlanIdx ?? plans[0]?.idx ?? null, [selectedPlanIdx, plans])
 
-  const { data: touDefinitions = [] } = useQuery({
-    queryKey: ['retailer-tou', activeRetailer],
-    queryFn: async () => {
-      const response = await api.get('/api/energy-plans/tou-definitions', {
-        params: { scope_type: 'retailer', scope_key: activeRetailer },
-      })
-      return response.data as TouDefinition[]
-    },
-    enabled: !!activeRetailer,
-  })
-
-  const touByPlanId = useMemo(() => {
-    const map = new Map<number, TouDefinition>()
-    for (const def of touDefinitions) {
-      if (def.plan_id != null) map.set(def.plan_id, def)
-    }
-    return map
-  }, [touDefinitions])
-
-  // Deduplicate plans: one entry per (plan_name, tariff_type)
+  // Deduplicate plans: one entry per (plan_name, tariff_type, first distributor)
   const uniquePlans = useMemo(() => {
     const seen = new Map<string, EnergyPlan>()
     for (const plan of plans) {
-      const key = `${plan.plan_name}|${plan.tariff_type}`
+      const dist = plan.distributors?.[0] ?? ''
+      const key = `${plan.plan_name}|${plan.tariff_type}|${dist}`
       if (!seen.has(key)) seen.set(key, plan)
     }
     return Array.from(seen.values())
   }, [plans])
 
-  const activePlan = useMemo(() => plans.find((p) => p.id === activePlanId) ?? null, [plans, activePlanId])
-  const activeDefinition = useMemo(
-    () => touDefinitions.find((d) => d.plan_id === activePlanId) ?? touDefinitions[0],
-    [touDefinitions, activePlanId]
-  )
+  const activePlan = useMemo(() => plans.find((p) => p.idx === activePlanIdx) ?? null, [plans, activePlanIdx])
+
   const hourlyRateData = useMemo(() => {
+    if (!activePlan) return []
     return buildHourlyRateData(
-      activeDefinition?.periods ?? [],
-      activePlan?.usage_rate_cents_per_kwh ?? null,
-      activePlan?.feed_in_tariffs,
+      activePlan.tou_rates ?? [],
+      activePlan.usage_rate_cents_per_kwh ?? null,
+      activePlan.feed_in_tariffs,
     )
-  }, [activeDefinition, activePlan])
+  }, [activePlan])
 
   const activeFeedIns = useMemo(() => {
     return (activePlan?.feed_in_tariffs ?? [])
@@ -242,16 +238,13 @@ export default function Retailers() {
       })
   }, [activePlan])
 
-  const { data: history = [] } = useQuery({
-    queryKey: ['retailer-history', activeRetailer],
-    queryFn: async () => {
-      const response = await api.get('/api/energy-plans/history', {
-        params: { retailer_slug: activeRetailer },
+  const lastUpdated = catalogStatus?.generated_at_utc
+    ? new Date(catalogStatus.generated_at_utc).toLocaleDateString('en-AU', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
       })
-      return response.data as YearHistory[]
-    },
-    enabled: !!activeRetailer,
-  })
+    : null
 
   return (
     <div className="space-y-8">
@@ -259,25 +252,47 @@ export default function Retailers() {
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Retailers & Energy Plans</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Select a retailer to review plans, rates, and yearly history.
+            Select a retailer to review plans and rates.
           </p>
         </div>
-        <button
-          onClick={() => refreshMutation.mutate()}
-          disabled={refreshMutation.isPending}
-          className="px-4 py-2 rounded-md bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 disabled:opacity-60"
-        >
-          {refreshMutation.isPending ? 'Syncing...' : 'Sync Plans'}
-        </button>
+        {lastUpdated && (
+          <span className="text-xs text-slate-400">
+            Last updated: {lastUpdated}
+          </span>
+        )}
       </div>
+
+      {states.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setSelectedState(null)}
+            className={`px-3 py-1.5 rounded-md text-sm font-medium ${
+              selectedState === null ? 'bg-slate-800 text-white' : 'bg-white border border-slate-300 text-slate-700'
+            }`}
+          >
+            All States
+          </button>
+          {states.map((state) => (
+            <button
+              key={state}
+              onClick={() => setSelectedState(state)}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium ${
+                selectedState === state ? 'bg-slate-800 text-white' : 'bg-white border border-slate-300 text-slate-700'
+              }`}
+            >
+              {state}
+            </button>
+          ))}
+        </div>
+      )}
 
       {retailersLoading ? (
         <div className="text-slate-500">Loading retailers...</div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {retailers.map((retailer) => (
+          {filteredRetailers.map((retailer) => (
             <button
-              key={retailer.id}
+              key={retailer.slug}
               onClick={() => setSelectedRetailer(retailer.slug)}
               className={`h-24 rounded-2xl border px-3 ${
                 activeRetailer === retailer.slug
@@ -305,19 +320,18 @@ export default function Retailers() {
         ) : (
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
             {uniquePlans.map((plan) => {
-              const def = touByPlanId.get(plan.id)
-              const periods = def?.periods ?? []
-              const touPeriods = periods.filter((p) => p.name !== 'anytime')
+              const touRates = plan.tou_rates.filter((r) => r.name !== 'anytime')
               const usageRate = num(plan.usage_rate_cents_per_kwh)
-              const hasRates = periods.some((p) => num(p.rate_cents_per_kwh) != null) || usageRate != null
-              const chartData = hasRates ? buildHourlyRateData(periods, plan.usage_rate_cents_per_kwh ?? null, plan.feed_in_tariffs) : null
-              const isActive = activePlanId === plan.id
+              const hasRates = plan.tou_rates.some((r) => num(r.rate_cents_per_kwh) != null) || usageRate != null
+              const chartData = hasRates ? buildHourlyRateData(plan.tou_rates, plan.usage_rate_cents_per_kwh ?? null, plan.feed_in_tariffs) : null
+              const isActive = activePlanIdx === plan.idx
               const hasFeedIn = chartData != null && chartData.some((d) => d.feedIn1 != null)
+              const feedIn = primaryFeedInRate(plan.feed_in_tariffs)
 
               return (
                 <button
-                  key={plan.id}
-                  onClick={() => setSelectedPlanId(plan.id)}
+                  key={plan.idx}
+                  onClick={() => setSelectedPlanIdx(plan.idx)}
                   className={`w-full text-left rounded-lg border bg-white p-4 transition-shadow hover:shadow-md ${
                     isActive ? 'border-primary-500 ring-1 ring-primary-500' : 'border-slate-200'
                   }`}
@@ -328,7 +342,7 @@ export default function Retailers() {
                       <div className="font-semibold text-slate-900 truncate">{plan.plan_name}</div>
                       <div className="mt-0.5 text-xs text-slate-500">
                         {plan.tariff_type.toUpperCase()} | Effective {plan.effective_from}
-                        {plan.network_provider ? ` | ${plan.network_provider}` : ''}
+                        {plan.distributors?.[0] ? ` | ${plan.distributors[0]}` : ''}
                       </div>
                     </div>
                     <span
@@ -352,33 +366,35 @@ export default function Retailers() {
                         Usage <span className="font-medium text-slate-900">{usageRate.toFixed(2)}c</span>/kWh
                       </span>
                     )}
-                    {num(plan.feed_in_tariff_cents_per_kwh) != null && (
+                    {feedIn != null && (
                       <span className="text-slate-600">
-                        Feed-in <span className="font-medium text-emerald-700">{num(plan.feed_in_tariff_cents_per_kwh)!.toFixed(1)}c</span>/kWh
+                        Feed-in <span className="font-medium text-emerald-700">{feedIn.toFixed(1)}c</span>/kWh
                       </span>
                     )}
                   </div>
 
-                  {/* TOU period pills + mini chart */}
-                  {touPeriods.length > 0 && (
+                  {/* TOU rate pills + mini chart */}
+                  {touRates.length > 0 && (
                     <div className="mt-3 flex gap-3">
                       <div className="flex-1 flex flex-wrap gap-1.5">
-                        {touPeriods.map((period) => (
+                        {touRates.map((rate, i) => (
                           <span
-                            key={period.id}
+                            key={`${rate.name}-${i}`}
                             className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-slate-50 border border-slate-150 text-slate-700"
                           >
                             <span
                               className="w-1.5 h-1.5 rounded-full"
-                              style={{ backgroundColor: PERIOD_COLORS[period.name] ?? '#94a3b8' }}
+                              style={{ backgroundColor: PERIOD_COLORS[rate.name] ?? '#94a3b8' }}
                             />
-                            {period.name.replace('_', '-')}{' '}
-                            {num(period.rate_cents_per_kwh) != null && (
-                              <span className="font-medium">{num(period.rate_cents_per_kwh)!.toFixed(2)}c</span>
+                            {rate.name.replace('_', '-')}{' '}
+                            {num(rate.rate_cents_per_kwh) != null && (
+                              <span className="font-medium">{num(rate.rate_cents_per_kwh)!.toFixed(2)}c</span>
                             )}
-                            <span className="text-slate-400">
-                              {formatTime(period.start_time)}{'\u2013'}{formatTime(period.end_time)}
-                            </span>
+                            {rate.start_time && rate.end_time && (
+                              <span className="text-slate-400">
+                                {formatTime(rate.start_time)}{'\u2013'}{formatTime(rate.end_time)}
+                              </span>
+                            )}
                           </span>
                         ))}
                       </div>
@@ -388,7 +404,7 @@ export default function Retailers() {
                           <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={chartData} margin={{ top: 2, right: 2, bottom: 0, left: 0 }}>
                               <defs>
-                                <linearGradient id={`grad-${plan.id}`} x1="0" y1="0" x2="0" y2="1">
+                                <linearGradient id={`grad-${plan.idx}`} x1="0" y1="0" x2="0" y2="1">
                                   <stop offset="0%" stopColor="#16a34a" stopOpacity={0.3} />
                                   <stop offset="100%" stopColor="#16a34a" stopOpacity={0.05} />
                                 </linearGradient>
@@ -398,7 +414,7 @@ export default function Retailers() {
                                 dataKey="rate"
                                 stroke="#16a34a"
                                 strokeWidth={1.5}
-                                fill={`url(#grad-${plan.id})`}
+                                fill={`url(#grad-${plan.idx})`}
                                 isAnimationActive={false}
                               />
                               {hasFeedIn && (
@@ -430,7 +446,8 @@ export default function Retailers() {
         <div className="bg-white rounded-lg border border-slate-200 p-5">
           <h2 className="text-lg font-medium text-slate-900">Hourly Rate View</h2>
           <p className="text-sm text-slate-500 mt-1">
-            {activePlan.plan_name} {activeDefinition ? `| ${activeDefinition.timezone}` : ''}
+            {activePlan.plan_name}
+            {activePlan.distributors?.[0] ? ` | ${activePlan.distributors[0]}` : ''}
           </p>
           <div className="h-72 mt-4">
             <ResponsiveContainer width="100%" height="100%">
@@ -482,21 +499,6 @@ export default function Retailers() {
           </div>
         </div>
       )}
-
-      <div className="bg-white rounded-lg border border-slate-200 p-5">
-        <h2 className="text-lg font-medium text-slate-900">History by Year</h2>
-        <div className="mt-4 space-y-4">
-          {history.map((bucket) => (
-            <div key={bucket.year} className="rounded-md border border-slate-200 p-3">
-              <div className="font-semibold text-slate-900">{bucket.year}</div>
-              <div className="text-sm text-slate-600">
-                Plans: {bucket.plans.length} | TOU definitions: {bucket.tou_definitions.length}
-              </div>
-            </div>
-          ))}
-          {history.length === 0 && <p className="text-slate-500">No history found.</p>}
-        </div>
-      </div>
     </div>
   )
 }
