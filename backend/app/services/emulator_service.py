@@ -13,6 +13,9 @@ from app.services.energy_expert_service import EnergyExpertService
 
 MONEY_QUANT = Decimal("0.01")
 
+# (weekday 0-6, hour 0-23) → total kWh consumed across all intervals in that bucket
+UsageProfile = dict[tuple[int, int], Decimal]
+
 
 def _slugify(name: str) -> str:
     return "-".join(name.strip().lower().split())
@@ -74,6 +77,10 @@ class EmulatorService:
         total_import_kwh = sum(iv["value"] for iv in import_intervals)
         total_export_kwh = sum(iv["value"] for iv in export_intervals)
 
+        # Build a (weekday, hour) → kWh profile once — reused by every TOU plan
+        usage_profile = self._build_usage_profile(import_intervals)
+        usage_insights = self._compute_usage_insights(usage_profile, total_import_kwh)
+
         # 3. Load plan catalog, filter by postcode and retailer
         if postcode:
             catalog = self._filter_plans_by_postcode([], postcode)
@@ -87,7 +94,7 @@ class EmulatorService:
         plan_results: list[dict] = []
         for plan in catalog:
             result = self._compute_plan_cost(
-                plan, billing_days, import_intervals, total_import_kwh, total_export_kwh
+                plan, billing_days, usage_profile, total_import_kwh, total_export_kwh
             )
             plan_results.append(result)
 
@@ -136,6 +143,7 @@ class EmulatorService:
             "cheapest_plan_name": cheapest["plan_name"] if cheapest else "",
             "cheapest_total": float(cheapest["total_dollars"].quantize(MONEY_QUANT)) if cheapest else 0,
             "potential_annual_saving": potential_annual_saving,
+            "usage_insights": usage_insights,
         }
 
     @staticmethod
@@ -229,7 +237,7 @@ class EmulatorService:
         self,
         plan: dict,
         billing_days: int,
-        import_intervals: list[dict],
+        usage_profile: "UsageProfile",
         total_import_kwh: float,
         total_export_kwh: float,
     ) -> dict:
@@ -246,7 +254,7 @@ class EmulatorService:
 
         if tariff_type == "tou" and tou_rates:
             usage_charge, period_breakdown = self._compute_tou_usage(
-                import_intervals, tou_rates, usage_rate
+                usage_profile, tou_rates, usage_rate
             )
         else:
             usage_charge, period_breakdown = self._compute_flat_usage(total_import_kwh, usage_rate)
@@ -283,40 +291,88 @@ class EmulatorService:
             "feed_in_kwh": total_export_kwh,
         }
 
+    @staticmethod
+    def _build_usage_profile(import_intervals: list[dict]) -> "UsageProfile":
+        """Aggregate import intervals into a (weekday, hour) → total_kWh map.
+
+        This is computed once per emulation run and reused by every TOU plan,
+        replacing the O(intervals × plans) loop with O(intervals + 168 × plans).
+        """
+        profile: UsageProfile = {}
+        for iv in import_intervals:
+            key = (iv["weekday"], iv["hour"])
+            profile[key] = profile.get(key, Decimal("0")) + Decimal(str(iv["value"]))
+        return profile
+
+    @staticmethod
+    def _compute_usage_insights(profile: "UsageProfile", total_import_kwh: float) -> dict:
+        """Derive human-readable consumption insights from the usage profile."""
+        if not profile or total_import_kwh <= 0:
+            return {}
+
+        total = Decimal(str(total_import_kwh))
+
+        # Peak hours: 7-22 weekdays (standard residential peak window)
+        peak_kwh = Decimal("0")
+        offpeak_kwh = Decimal("0")
+        for (weekday, hour), kwh in profile.items():
+            if weekday < 5 and 7 <= hour < 22:
+                peak_kwh += kwh
+            else:
+                offpeak_kwh += kwh
+
+        peak_pct = float((peak_kwh / total * 100).quantize(Decimal("0.1"))) if total else 0.0
+        offpeak_pct = round(100.0 - peak_pct, 1)
+
+        # Top-3 busiest hours (across all days)
+        hour_totals: dict[int, Decimal] = {}
+        for (_, hour), kwh in profile.items():
+            hour_totals[hour] = hour_totals.get(hour, Decimal("0")) + kwh
+        top_hours = sorted(hour_totals, key=lambda h: hour_totals[h], reverse=True)[:3]
+
+        return {
+            "peak_usage_pct": peak_pct,
+            "offpeak_usage_pct": offpeak_pct,
+            "top_usage_hours": top_hours,
+            "tou_likely_beneficial": offpeak_pct >= 40.0,
+        }
+
     def _compute_tou_usage(
         self,
-        import_intervals: list[dict],
+        usage_profile: "UsageProfile",
         tou_rates: list[dict],
         fallback_rate: Optional[float],
     ) -> tuple[Decimal, list[dict]]:
-        # Bucket usage by period name
+        """Compute TOU usage cost from the precomputed (weekday, hour) profile.
+
+        Iterates at most 168 buckets (7 days × 24 hours) regardless of how many
+        raw intervals were recorded, making per-plan cost O(168 × num_windows).
+        """
         period_kwh: dict[str, Decimal] = {}
         period_rate: dict[str, Decimal] = {}
 
         fallback = Decimal(str(fallback_rate)) if fallback_rate is not None else Decimal("0")
 
-        for iv in import_intervals:
-            hour = iv["hour"]
-            weekday = iv["weekday"]
-            matched_name = None
+        # Pre-parse windows once
+        parsed_windows = []
+        for window in tou_rates:
+            parsed_windows.append({
+                "name": window.get("name", "usage"),
+                "start": _parse_hour(window.get("start_time", "00:00")),
+                "end": _parse_end_hour(window.get("end_time", "23:59")),
+                "days": set(window.get("days", range(7))),
+                "rate": Decimal(str(window["rate_cents_per_kwh"])) if window.get("rate_cents_per_kwh") is not None else fallback,
+            })
+
+        for (weekday, hour), kwh in usage_profile.items():
+            matched_name = "usage"
             matched_rate = fallback
-
-            for window in tou_rates:
-                start = _parse_hour(window.get("start_time", "00:00"))
-                end = _parse_end_hour(window.get("end_time", "23:59"))
-                days = window.get("days", [0, 1, 2, 3, 4, 5, 6])
-                if weekday in days and _is_within_period(hour, start, end):
-                    matched_name = window.get("name", "usage")
-                    rate_val = window.get("rate_cents_per_kwh")
-                    if rate_val is not None:
-                        matched_rate = Decimal(str(rate_val))
+            for w in parsed_windows:
+                if weekday in w["days"] and _is_within_period(hour, w["start"], w["end"]):
+                    matched_name = w["name"]
+                    matched_rate = w["rate"]
                     break
-
-            if matched_name is None:
-                matched_name = "usage"
-                matched_rate = fallback
-
-            period_kwh[matched_name] = period_kwh.get(matched_name, Decimal("0")) + Decimal(str(iv["value"]))
+            period_kwh[matched_name] = period_kwh.get(matched_name, Decimal("0")) + kwh
             period_rate[matched_name] = matched_rate
 
         breakdown = []

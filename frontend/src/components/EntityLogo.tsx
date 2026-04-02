@@ -7,23 +7,45 @@ type EntityLogoProps = {
 };
 
 const logoDomainByRetailer: Record<string, string> = {
+  // Big 3
   agl: "agl.com.au",
   "origin energy": "originenergy.com.au",
   energyaustralia: "energyaustralia.com.au",
-  "alinta energy": "alintaenergy.com.au",
-  "red energy": "redenergy.com.au",
-  engie: "engie.com.au",
+  // CDR catalog retailers
   "1st energy": "1stenergy.com.au",
-  powershop: "powershop.com.au",
+  "alinta energy": "alintaenergy.com.au",
+  "amber electric": "amberhq.com.au",
+  "arcline by racv": "racv.com.au",
+  "arcline by racv - energy": "racv.com.au",
+  "aurora energy": "auroraenergy.com.au",
+  "blue nrg": "bluenrg.com.au",
+  bluenrg: "bluenrg.com.au",
+  covau: "covau.com.au",
+  "diamond energy": "diamondenergy.com.au",
   dodo: "dodo.com",
-  actewagl: "actewagl.com.au",
+  "energy locals retail": "energylocals.com.au",
+  "energy locals urban": "energylocals.com.au",
+  engie: "engie.com.au",
+  "ergon energy": "ergon.com.au",
+  "flipped energy": "flippedenergy.com.au",
+  "future x power": "futurexpwr.com.au",
+  "globird energy": "globirdenergy.com.au",
+  "io energy": "io.energy",
+  "kogan energy": "kogan.com",
   lumo: "lumoenergy.com.au",
   "lumo energy": "lumoenergy.com.au",
   "lumo energy (sa)": "lumoenergy.com.au",
   "momentum energy": "momentumenergy.com.au",
-  bluenrg: "bluenrg.com.au",
+  nectr: "nectr.com.au",
+  "next business energy": "nextbusinessenergy.com.au",
   "ovo energy": "ovoenergy.com.au",
-  "arcline by racv": "racv.com.au",
+  powershop: "powershop.com.au",
+  "real utilities": "realutilities.com.au",
+  "red energy": "redenergy.com.au",
+  "solstice energy": "solsticeenergy.com.au",
+  sumo: "sumo.com.au",
+  actewagl: "actewagl.com.au",
+  "zen energy": "zenenergy.com.au",
 };
 
 const logoDomainByNetwork: Record<string, string> = {
@@ -148,7 +170,17 @@ export default function EntityLogo({
 
   const domain = useMemo(() => {
     if (type === "retailer") {
-      return logoDomainByRetailer[toKey(name)];
+      const known = logoDomainByRetailer[toKey(name)];
+      if (known) return known;
+      // Derive a plausible .com.au domain for unknown retailers
+      const slug = name
+        .toLowerCase()
+        .replace(/\s*\(.*?\)\s*/g, "")
+        .trim()
+        .replace(/[^a-z0-9]+/g, "")
+        .replace(/energy$/, "energy")
+        .replace(/retail$/, "");
+      return slug ? `${slug}.com.au` : undefined;
     }
     return logoDomainByNetwork[name] || logoDomainByNetwork[toKey(name)];
   }, [name, type]);

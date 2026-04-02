@@ -42,6 +42,13 @@ type PlanCost = {
   rank: number
 }
 
+type UsageInsights = {
+  peak_usage_pct: number
+  offpeak_usage_pct: number
+  top_usage_hours: number[]
+  tou_likely_beneficial: boolean
+}
+
 type EmulatorResponse = {
   nmi: string
   billing_start: string
@@ -55,6 +62,7 @@ type EmulatorResponse = {
   cheapest_plan_name: string
   cheapest_total: number
   potential_annual_saving: number | null
+  usage_insights: UsageInsights | null
 }
 
 type SortField = 'total' | 'usage' | 'supply' | 'delta'
@@ -122,6 +130,7 @@ export default function Emulator() {
   const [retailerFilter, setRetailerFilter] = useState<string[]>([])
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
   const [sortField, setSortField] = useState<SortField>('total')
+  const [planSearch, setPlanSearch] = useState('')
 
   // Fetch NMIs
   const { data: nmis = [] } = useQuery({
@@ -182,10 +191,20 @@ export default function Emulator() {
 
   const result = mutation.data
 
-  // Sort plans
+  // Sort and filter plans
   const sortedPlans = useMemo(() => {
     if (!result) return []
-    const plans = [...result.plans]
+    let plans = [...result.plans]
+
+    // Fuzzy search: all query words must appear in retailer or plan name
+    if (planSearch.trim()) {
+      const words = planSearch.trim().toLowerCase().split(/\s+/)
+      plans = plans.filter((p) => {
+        const haystack = `${p.retailer} ${p.plan_name}`.toLowerCase()
+        return words.every((w) => haystack.includes(w))
+      })
+    }
+
     switch (sortField) {
       case 'total':
         plans.sort((a, b) => a.total_dollars - b.total_dollars)
@@ -201,7 +220,7 @@ export default function Emulator() {
         break
     }
     return plans
-  }, [result, sortField])
+  }, [result, sortField, planSearch])
 
   const canRun = selectedNmi && billingStart && billingEnd
 
@@ -336,11 +355,51 @@ export default function Emulator() {
         </div>
       )}
 
+      {/* Usage Insights */}
+      {result?.usage_insights && (
+        <div className="bg-white rounded-lg border border-slate-200 p-4">
+          <div className="text-sm font-medium text-slate-700 mb-3">Consumption Insights</div>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-400 shrink-0" />
+              <span className="text-slate-600">Peak usage (weekday 7–22h):</span>
+              <span className="font-semibold text-slate-900">{result.usage_insights.peak_usage_pct}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
+              <span className="text-slate-600">Off-peak:</span>
+              <span className="font-semibold text-slate-900">{result.usage_insights.offpeak_usage_pct}%</span>
+            </div>
+            {result.usage_insights.top_usage_hours.length > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="text-slate-600">Busiest hours:</span>
+                <span className="font-semibold text-slate-900">
+                  {result.usage_insights.top_usage_hours.map((h) => `${String(h).padStart(2, '0')}:00`).join(', ')}
+                </span>
+              </div>
+            )}
+            <div className="flex items-center gap-1.5">
+              <span
+                className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                  result.usage_insights.tou_likely_beneficial
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-slate-100 text-slate-600'
+                }`}
+              >
+                {result.usage_insights.tou_likely_beneficial
+                  ? 'TOU plans likely beneficial'
+                  : 'Flat-rate plans likely better'}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results Table */}
       {result && (
         <div className="bg-white rounded-lg border border-slate-200">
-          {/* Sort controls */}
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
+          {/* Sort + Search controls */}
+          <div className="flex flex-wrap items-center gap-2 px-4 py-3 border-b border-slate-100">
             <span className="text-sm text-slate-500">Sort by:</span>
             {([
               ['total', 'Total'],
@@ -360,7 +419,18 @@ export default function Emulator() {
                 {label}
               </button>
             ))}
-            <span className="ml-auto text-sm text-slate-500">{result.plans.length} plans</span>
+            <div className="ml-auto flex items-center gap-2">
+              <input
+                type="text"
+                value={planSearch}
+                onChange={(e) => setPlanSearch(e.target.value)}
+                placeholder="Search plans..."
+                className="text-sm rounded-md border border-slate-300 px-3 py-1 w-48 focus:outline-none focus:ring-1 focus:ring-primary-400"
+              />
+              <span className="text-sm text-slate-500 whitespace-nowrap">
+                {sortedPlans.length}{planSearch ? ` / ${result.plans.length}` : ''} plans
+              </span>
+            </div>
           </div>
 
           {/* Table */}
